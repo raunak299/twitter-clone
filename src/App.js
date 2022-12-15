@@ -1,42 +1,20 @@
 import "./App.css";
-import logo from "./logo.png";
+// import Button from '@mui/material/Button';
+import { Route, Routes, Navigate } from "react-router-dom";
+import Home from "./Pages/Home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} alt="mockBee logo" width="180" height="180" />
-        <h1 className="brand-title">
-          Welcome to <span>mockBee!</span>
-        </h1>
-        <p className="brand-description">
-          Get started by editing <code>src/App.js</code>
-        </p>
-        <div className="links">
-          <a
-            href="https://mockbee.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Explore mockBee
-          </a>
-          <a
-            href="https://mockbee.netlify.app/docs/api/introduction"
-            target="_blank"
-            rel="noreferrer"
-          >
-            API Documentation
-          </a>
-          <a
-            href="https://github.com/neogcamp/mockBee"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Contribute
-          </a>
-        </div>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/bookmarks" element={<h2>bookmark page</h2>} />
+      <Route path="/search" element={<h2>search page</h2>} />
+      <Route path="/authentication" element={<h2>authentication page</h2>} />
+      <Route path="/profile" element={<h2>profile page</h2>} />
+
+      <Route path="*" element={<Navigate to="/home" />} />
+    </Routes>
   );
 }
 
