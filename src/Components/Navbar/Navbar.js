@@ -5,7 +5,8 @@ import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
+import AddTweetBtn from "../AddTweetBtn/AddTweetBtn";
 
 const Navbar = () => {
   return (
@@ -34,9 +35,7 @@ const Navbar = () => {
         <div className={styles["icon-container"]}>
           <NightlightRoundIcon />
         </div>
-        <div className={styles["icon-container"]}>
-          <AddIcon />
-        </div>
+        <AddTweetBtn />
       </div>
     </>
   );

@@ -1,7 +1,13 @@
-import Layout from "../Components/Layout";
+import EmojiPicker from "../Components/EmojiPicker/EmojiPicker";
+import Layout from "../Components/Layout/Layout";
+// import styles from './Home.module.css'
 
 const Home = () => {
-  return <Layout>{/* <h1>Home Page </h1> */}</Layout>;
+  return (
+    <Layout>
+      <EmojiPicker />
+    </Layout>
+  );
 };
 
 export default Home;
