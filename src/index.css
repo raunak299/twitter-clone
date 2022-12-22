@@ -23,6 +23,7 @@ code {
 .dark-theme{
   --main-background-color: black;
   --secondary-background-color:rgb(32, 35, 39);
+  --third-background-color:white;
   --main-theme-color:#1DA1F2;
   --main-text-color:whitesmoke;
   --main-icon-color:whitesmoke;
@@ -32,6 +33,7 @@ code {
 .light-theme{
    --main-background-color: white;
    --secondary-background-color:rgb(239, 243, 244);
+   --third-background-color:black;
    --main-theme-color:#1DA1F2;
    --main-text-color:black;
    --main-icon-color:black;
