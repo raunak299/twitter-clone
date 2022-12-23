@@ -6,8 +6,9 @@ import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "../../Components/EmojiPicker/EmojiPicker";
 import CloseIcon from "@mui/icons-material/Close";
 import profilepic from "../../assets/profile.jpg";
+import axios from "axios";
 
-import { storage } from "../../firebase";
+import useFetch from "../../custom-hooks/fetch-hook";
 
 function NewTweet() {
   const [emojiPickerVisible, setEmojiPickerVisibility] = useState(false);
@@ -42,9 +43,68 @@ function NewTweet() {
     setTweetImg("");
   };
 
-  const newTweetHandler = () => {
+  const { loading, sendRequest } = useFetch();
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+
+  const newTweetHandler = async () => {
     console.log(textareaRef.current.value);
     console.log(tweetImg);
+    // sendRequest(
+    //   {
+    //     url: "/api/posts",
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //       postData: { pic: tweetImg, content: textareaRef.current.value },
+    //     }),
+    //     headers: {
+    //       "content-type": "application/json",
+    //       authorization: token,
+    //     },
+    //   },
+    //   (data) => {
+    //     console.log(data);
+    //     console.log(data.posts[0]["id"]);
+    //     sendRequest(
+    //       {
+    //         // url: `/api/posts/like/${data.posts[0]["id"]}`,
+    //         url: `/api/comments/add/${data.posts[0]["_id"]}`,
+    //         method: "POST",
+    //         body: JSON.stringify({ commentData: { content: "hello" } }),
+    //         headers: {
+    //           "content-type": "application/json",
+    //           authorization: token,
+    //         },
+    //       },
+    //       (data) => {
+    //         sendRequest({ url: "/api/posts" }, (responsedata) =>
+    //           console.log(responsedata)
+    //         );
+    //       }
+    //     );
+    //   }
+    //);
+
+    sendRequest(
+      {
+        url: "/api/posts",
+        method: "POST",
+        body: JSON.stringify({
+          postData: {
+            pic: tweetImg,
+            content: textareaRef.current.value,
+            userId,
+          },
+        }),
+        headers: {
+          "content-type": "application/json",
+          authorization: token,
+        },
+      },
+      (data) => {
+        console.log(data);
+      }
+    );
   };
 
   return (

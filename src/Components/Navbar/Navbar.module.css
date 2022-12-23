@@ -17,6 +17,10 @@
     color:var(--main-icon-color);
 }
 
+a{
+    text-decoration: none;
+}
+
 .navbar-large{
     display:none;
 }
@@ -66,11 +70,14 @@
         background: var(--main-theme-color);;
     }
 
+ 
+    
     .navbar-large svg{
         height:2.5rem;
         width:2.5rem;
-
     }
+
+    
 
 
 

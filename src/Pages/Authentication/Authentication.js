@@ -1,15 +1,24 @@
 import styles from "./Authentication.module.css";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 import useAuthHook from "../../custom-hooks/auth-hook";
 import useFetch from "../../custom-hooks/fetch-hook";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Authentication() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
+  const [login, setLogin] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/profile");
+    }
+  }, []);
 
   const {
     inputTouched: emailTouched,
@@ -68,33 +77,56 @@ function Authentication() {
     );
   };
 
-  const formValid =
-    emailError.length === 0 &&
-    emailTouched &&
-    passwordError.length === 0 &&
-    passwordTouched &&
-    confirmPasswordError.length === 0 &&
-    confirmPasswordTouched;
+  const resetAuthForm = () => {
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
+    setEmailTouched(false);
+    setPasswordTouched(false);
+    if (!login) {
+      confirmPasswordRef.current.value = "";
+      setConfirmPasswordTouched(false);
+    }
+  };
+
+  const formValid = login
+    ? emailError.length === 0 &&
+      emailTouched &&
+      passwordError.length === 0 &&
+      passwordTouched
+    : emailError.length === 0 &&
+      emailTouched &&
+      passwordError.length === 0 &&
+      passwordTouched &&
+      confirmPasswordError.length === 0 &&
+      confirmPasswordTouched;
 
   const applydata = (data) => {
     console.log(data);
+    localStorage.setItem("token", data.encodedToken);
+    localStorage.setItem("email", data.createdUser.username);
+    localStorage.setItem("userId", data.createdUser["_id"]);
+    navigate(location.state?.from?.pathname ?? "/");
   };
 
   const { loading, sendRequest } = useFetch();
-  const submitHandler = (e) => {
+  const url = login ? "/api/auth/login" : "/api/auth/signup";
+  const submitHandler = async (e) => {
     e.preventDefault();
     sendRequest(
       {
         url: "/api/auth/signup",
         method: "POST",
         body: JSON.stringify({
-          email: emailRef.current.value,
+          username: emailRef.current.value,
           password: passwordRef.current.value,
+          firstname: "",
+          lastname: "",
         }),
         headers: { "content-type": "application/json" },
       },
       applydata
     );
+    resetAuthForm();
   };
 
   return (
@@ -165,9 +197,15 @@ function Authentication() {
         >
           {!login ? "Sign Up" : "Log In"}
         </button>
+
         <div className={styles["login-toggle"]}>
           {login ? "Not a memeber yet ? " : "Already a member ? "}
-          <span onClick={() => setLogin(!login)}>
+          <span
+            onClick={() => {
+              resetAuthForm();
+              setLogin(!login);
+            }}
+          >
             {login ? "Sign Up" : "Log In"}
           </span>
         </div>

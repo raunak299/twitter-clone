@@ -2,10 +2,9 @@ import { useState } from "react";
 
 const useFetch = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
   const sendRequest = async (requestConfig, applydata) => {
-    console.log(requestConfig);
     try {
       setLoading(true);
       const response = await fetch(requestConfig.url, {
@@ -24,7 +23,6 @@ const useFetch = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      setError("error");
       setLoading(false);
     }
   };

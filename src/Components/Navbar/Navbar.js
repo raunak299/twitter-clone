@@ -7,12 +7,15 @@ import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import TwitterIcon from "@mui/icons-material/Twitter";
 // import AddIcon from "@mui/icons-material/Add";
 import AddTweetBtn from "../AddTweetBtn/AddTweetBtn";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <>
       <div className={styles["navbar-small"]}>
-        <PermIdentityIcon />
+        <Link to="/profile">
+          <PermIdentityIcon />
+        </Link>
         <NightlightRoundIcon />
       </div>
 
@@ -30,7 +33,9 @@ const Navbar = () => {
           <TurnedInNotIcon />
         </div>
         <div className={styles["icon-container"]}>
-          <PermIdentityIcon />
+          <Link to="/profile">
+            <PermIdentityIcon />
+          </Link>
         </div>
         <div className={styles["icon-container"]}>
           <NightlightRoundIcon />
