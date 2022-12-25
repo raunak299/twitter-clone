@@ -33,7 +33,7 @@ const Navbar = () => {
           <TurnedInNotIcon />
         </div>
         <div className={styles["icon-container"]}>
-          <Link to="/profile">
+          <Link to="/profile" className={styles["decoration"]}>
             <PermIdentityIcon />
           </Link>
         </div>

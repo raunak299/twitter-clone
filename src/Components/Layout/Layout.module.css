@@ -1,8 +1,12 @@
 .layout{
     min-height:100vh;
-    padding: 0 1.5rem;
+    /* padding: 0 1.5rem; */
     color: var(--main-text-color);
     background: var(--main-background-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
 }
 
 .add-tweet-btn{
@@ -13,6 +17,12 @@
 }
 
 @media(min-width:700px){
+
+    .layout{
+       padding-left: 10rem;
+    }
+    
+
     .add-tweet-btn{
         display:none;
     }

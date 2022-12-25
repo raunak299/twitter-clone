@@ -1,11 +1,12 @@
 import "./App.css";
 // import Button from '@mui/material/Button';
 import { Route, Routes, Navigate } from "react-router-dom";
-import Home from "./Pages/Home";
+import Home from "./Pages/Home/Home";
 import NewTweet from "./Pages/NewTweet/NewTweet";
 import Authentication from "./Pages/Authentication/Authentication";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import Profile from "./Pages/Profile/Profile";
+import TweetDetail from "./Pages/TweetDetail/TweetDetail";
 
 function App() {
   const login = localStorage.getItem("token");
@@ -14,6 +15,14 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
+      <Route
+        path="/tweet/:tweetId"
+        element={
+          <PrivateRoute>
+            <TweetDetail />
+          </PrivateRoute>
+        }
+      />
       <Route
         path="/new-tweet"
         element={

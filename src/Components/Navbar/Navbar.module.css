@@ -7,8 +7,9 @@
    top:0;
    left:0;
    width:100%;
-   border-top-style:solid;
-   border-top-color: var(--main-border-color);
+   /* border-bottom-style:solid;
+   border-bottom-color: var(--main-border-color); */
+   background: var(--main-background-color);
 }
 
 .navbar-small svg {
@@ -18,8 +19,9 @@
 }
 
 a{
-    text-decoration: none;
-}
+    text-decoration: none;}
+   
+
 
 .navbar-large{
     display:none;
@@ -49,6 +51,7 @@ a{
         border-right-color: var(--main-border-color);
         border-top:hidden;
         height:100%;
+        background: var(--main-background-color);
     }
 
 
@@ -71,10 +74,11 @@ a{
     }
 
  
-    
+   
+
     .navbar-large svg{
         height:2.5rem;
-        width:2.5rem;
+        width:2.5rem
     }
 
     

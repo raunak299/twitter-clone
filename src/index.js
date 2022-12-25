@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { makeServer } from "./server";
-import AuthContextProvider from "./Store/AuthContextProvider";
+import { Provider } from "react-redux";
+import store from "./Store/index-store";
 
 // Call make Server
 makeServer();
@@ -13,9 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthContextProvider>
+      <Provider store={store}>
         <App />
-      </AuthContextProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -2,13 +2,14 @@
     display:flex;
     justify-content: space-between;
     padding: .5rem 2rem;
-    align-items: 1rem;
+    align-items: center;
     position:fixed;
     bottom:0;
     left:0;
     width:100%;
-    border-top-style:solid;
-    border-top-color: var(--main-border-color);
+    /* border-top-style:solid;
+    border-top-color: var(--main-border-color); */
+    background: var(--main-background-color);
  }
  
  .footer-small svg {
@@ -35,4 +36,5 @@
 
     .footer-small{
      display: none;
+     background: var(--main-background-color);
     }}

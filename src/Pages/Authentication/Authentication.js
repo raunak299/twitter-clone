@@ -102,30 +102,29 @@ function Authentication() {
 
   const applydata = (data) => {
     console.log(data);
+    const userType = login ? "foundUser" : "createdUser";
     localStorage.setItem("token", data.encodedToken);
-    localStorage.setItem("email", data.createdUser.username);
-    localStorage.setItem("userId", data.createdUser["_id"]);
+    localStorage.setItem("email", data[userType].username);
+    localStorage.setItem("userId", data[userType]["_id"]);
     navigate(location.state?.from?.pathname ?? "/");
   };
 
-  const { loading, sendRequest } = useFetch();
+  const { sendRequest } = useFetch();
   const url = login ? "/api/auth/login" : "/api/auth/signup";
   const submitHandler = async (e) => {
     e.preventDefault();
-    sendRequest(
-      {
-        url: "/api/auth/signup",
-        method: "POST",
-        body: JSON.stringify({
-          username: emailRef.current.value,
-          password: passwordRef.current.value,
-          firstname: "",
-          lastname: "",
-        }),
-        headers: { "content-type": "application/json" },
-      },
-      applydata
-    );
+    const response = await sendRequest({
+      url,
+      method: "POST",
+      body: JSON.stringify({
+        username: emailRef.current.value,
+        password: passwordRef.current.value,
+        firstname: "",
+        lastname: "",
+      }),
+      headers: { "content-type": "application/json" },
+    });
+    applydata(response);
     resetAuthForm();
   };
 

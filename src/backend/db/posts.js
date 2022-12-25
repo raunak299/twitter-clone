@@ -12,12 +12,42 @@ export const posts = [
     pic: "https://res.cloudinary.com/donqbxlnc/image/upload/v1652342774/photo-1652298926911-9d628f82e7de_xnxfvn.jpg",
     content:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam veniam, voluptates illum repellendus vitae blanditiis voluptatum omnis reprehenderit corrupti officia.",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
+    likes:{
+        "likeCount": 1,
+        "likedBy": [
+            {
+                "_id": "asassdafdgdk",
+                "firstName": "Raunak",
+                "lastName": "Raj",
+                "username": "raunakraj299@gmail.com",
+                "password": "123456789",
+                "createdAt": "2022-01-25T10:38:12+05:30",
+                "updatedAt": "2022-05-17T10:33:36+05:30",
+                "pic": "https://res.cloudinary.com/donqbxlnc/image/upload/v1652423482/mypic-removebg-removebg-preview_1_y2dfmv.jpg",
+                "bio": "Aspiring Software Developer",
+                "followers": [],
+                "following": [],
+                "bookmarks": [],
+                "id": "1"
+            }
+        ],
+        "dislikedBy": []
     },
-    comments: [],
+    comments: [
+      {
+        _id: "693cb15f-96b9-439a-9174-5b7a0a9bbf94",
+        content: "hello",
+        userId: "c0c66899-18a5-43b9-b65e-40353f667d7f",
+        username: "raunakraj299@gmail.com",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+        createdAt: "2022-12-24T13:18:31+05:30",
+        updatedAt: "2022-12-24T13:18:31+05:30",
+      },
+    ],
+
     userId: "asassdafdgdk",
     createdAt: "2022-01-25T10:38:12+05:30",
     // updatedAt: formatDate(),
@@ -306,7 +336,7 @@ export const posts = [
 //                 },
 //               ],
 //               bookmarks: [],
-//               id: '1',
+//               id: '1',q
 //             },
 //           ],
 //           bookmarks: [],

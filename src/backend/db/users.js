@@ -6,15 +6,14 @@
 export const users = [
   {
     _id: "asassdafdgdk",
-    firstName: "Rohan",
-    lastName: "Mondal",
-    username: "rohan@gmail.com",
-    password: "1234abcd",
+    firstName: "Raunak",
+    lastName: "Raj",
+    username: "raunakraj299@gmail.com",
+    password: "123456789",
     createdAt: "2022-01-25T10:38:12+05:30",
     updatedAt: "2022-05-17T10:33:36+05:30",
-    userHandler: "rohan",
+    // userHandler: "rohan",
     pic: "https://res.cloudinary.com/donqbxlnc/image/upload/v1652423482/mypic-removebg-removebg-preview_1_y2dfmv.jpg",
-    link: "https://rohanspage.netlify.app",
     bio: "Aspiring Software Developer",
     followers: [
       {
