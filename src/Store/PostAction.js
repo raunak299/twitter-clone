@@ -1,10 +1,9 @@
 import { PostSliceAction } from "./PostSlice";
 
-const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
-
 export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
   return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
     let userData = await sendRequest({ url: `/api/users/${userId}` });
     console.log(userData);
     let response = await sendRequest({
@@ -14,6 +13,12 @@ export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
         postData: {
           pic: tweetImg,
           content: tweetContent,
+          likes: {
+            likeCount: 0,
+            likedBy: [],
+            dislikedBy: [],
+          },
+          comments: [],
           // userData,
         },
       }),

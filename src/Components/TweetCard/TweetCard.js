@@ -17,8 +17,7 @@ function TweetCard(props) {
   const userId = localStorage.getItem("userId");
 
   const likeTweetHandler = async () => {
-    const likedBy = postData.likes.likedBy;
-    let url = likedBy.find((item) => item["_id"] === postData.userId)
+    let url = likedByLogInUser
       ? `/api/posts/dislike/${postData["_id"]}`
       : `/api/posts/like/${postData["_id"]}`;
 
