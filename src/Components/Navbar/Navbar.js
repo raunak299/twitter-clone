@@ -13,7 +13,10 @@ const Navbar = () => {
   return (
     <>
       <div className={styles["navbar-small"]}>
-        <Link to="/profile">
+        <Link
+          to="/profile"
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
           <PermIdentityIcon />
         </Link>
         <NightlightRoundIcon />
@@ -24,7 +27,12 @@ const Navbar = () => {
           <TwitterIcon />
         </div>
         <div className={styles["icon-container"]}>
-          <HomeIcon />
+          <Link
+            to="/home"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <HomeIcon />
+          </Link>
         </div>
         <div className={styles["icon-container"]}>
           <SearchIcon />
@@ -33,7 +41,10 @@ const Navbar = () => {
           <TurnedInNotIcon />
         </div>
         <div className={styles["icon-container"]}>
-          <Link to="/profile" className={styles["decoration"]}>
+          <Link
+            to="/profile"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
             <PermIdentityIcon />
           </Link>
         </div>

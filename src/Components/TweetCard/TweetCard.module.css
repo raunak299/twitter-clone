@@ -11,7 +11,7 @@
     width:100%;
     border: solid var(--main-border-color);
     padding:1.2rem;
-
+    text-decoration: none!important;;
 }
 
 .tweet-user-details{
@@ -54,6 +54,8 @@
     margin-bottom: 1.2rem;
 }
 
+
+
 .tweet-content div{
     padding-bottom: 1.2rem;
     font-size: 1.2rem;
@@ -73,16 +75,20 @@
     color:grey
 }
 
-.tweet-action-container svg:nth-child(1):hover{
+.tweet-action-container div:nth-child(1):hover{
     color:rgb(207, 18, 50);
 }
 
-.tweet-action-container svg:nth-child(2):hover{
+.tweet-action-container a .tweet-action-item-cont:hover{
     color:var(--main-theme-color);
 }
 
-.tweet-action-container svg:nth-child(3):hover{
+.tweet-action-container div:nth-child(3):hover{
     color:rgb(18, 164, 18);
+}
+
+.likedByLogInUser{
+    color:red;
 }
 
 .tweet-action-item-cont {

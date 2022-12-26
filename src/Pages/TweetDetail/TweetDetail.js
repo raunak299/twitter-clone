@@ -1,6 +1,6 @@
 import styles from "./TweetDetail.module.css";
 import Layout from "../../Components/Layout/Layout";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -16,12 +16,15 @@ function TweetDetail() {
   const { tweetId } = useParams();
   const postDataList = useSelector((state) => state.PostSliceReducer.postData);
   const token = localStorage.getItem("token");
-
+  const inputRef = useRef();
+  const userId = localStorage.getItem("userId");
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [postData, setPostData] = useState();
+  const likedByList = postData?.likes?.likedBy;
+  let likedByLogInUser = likedByList?.find((item) => item["_id"] === userId);
 
   useEffect(() => {
     (async () => {
@@ -34,16 +37,13 @@ function TweetDetail() {
 
   useEffect(() => {
     (async () => {
-      //   setLoading(true);
       const response = await sendRequest({ url: `/api/posts/${tweetId}` });
       setPostData(response?.post);
-      //   setLoading(false);
     })();
   }, [tweetId, sendRequest, postDataList]);
 
   const likeTweetHandler = async () => {
-    const likedBy = postData.likes.likedBy;
-    let url = likedBy.find((item) => item["_id"] === postData.userId)
+    let url = likedByLogInUser
       ? `/api/posts/dislike/${postData["_id"]}`
       : `/api/posts/like/${postData["_id"]}`;
 
@@ -56,7 +56,29 @@ function TweetDetail() {
         authorization: token,
       },
     });
-    // console.log(responseData);
+    if (responseData) {
+      dispatch(PostSliceAction.setPostData({ allPost: responseData.posts }));
+    }
+  };
+
+  const addCommentHandler = async () => {
+    let temp = await sendRequest({ url: `/api/posts/${postData["_id"]}` });
+    console.log(temp);
+    let userData = await sendRequest({ url: `/api/users/${userId}` });
+    const responseData = await sendRequest({
+      url: `/api/comments/add/${postData["_id"]}`,
+      method: "POST",
+      body: JSON.stringify({
+        commentData: {
+          content: inputRef.current.value,
+          userData: userData.user,
+        },
+      }),
+      headers: {
+        "content-type": "application/json",
+        authorization: token,
+      },
+    });
     if (responseData) {
       dispatch(PostSliceAction.setPostData({ allPost: responseData.posts }));
     }
@@ -86,12 +108,16 @@ function TweetDetail() {
 
             <div className={styles["tweet-action-container"]}>
               <div className={styles["tweet-action-item-cont"]}>
-                <FavoriteBorder onClick={likeTweetHandler} />
+                <FavoriteBorder
+                  onClick={likeTweetHandler}
+                  className={likedByLogInUser ? styles["likedByLogInUser"] : ""}
+                />
                 <div>{postData.likes.likeCount}</div>
               </div>
 
               <div className={styles["tweet-action-item-cont"]}>
                 <ChatBubbleOutlineIcon />
+                <div>{postData?.length}</div>
               </div>
 
               <div className={styles["tweet-action-item-cont"]}>
@@ -101,11 +127,12 @@ function TweetDetail() {
 
             <div className={styles["comment-container"]}>
               <div className={styles["add-comment-container"]}>
-                <input type="text" />
-                <button>Comment</button>
+                <input type="text" ref={inputRef} />
+                <button onClick={addCommentHandler}>Comment</button>
               </div>
-              <Comment />
-              <Comment />
+              {postData.comments?.map((commentData, index) => (
+                <Comment key={index} commentData={commentData} />
+              ))}
             </div>
           </div>
         )}

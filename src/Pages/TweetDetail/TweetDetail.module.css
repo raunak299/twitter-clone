@@ -77,16 +77,20 @@
     padding-bottom:1rem;
 }
 
-.tweet-action-container svg:nth-child(1):hover{
+.tweet-action-container .tweet-action-item-cont:nth-child(1):hover{
     color:rgb(207, 18, 50);
 }
 
-.tweet-action-container svg:nth-child(2):hover{
+.tweet-action-container .tweet-action-item-cont:nth-child(2):hover{
     color:var(--main-theme-color);
 }
 
-.tweet-action-container svg:nth-child(3):hover{
+.tweet-action-container .tweet-action-item-cont:nth-child(3):hover{
     color:rgb(18, 164, 18);
+}
+
+.likedByLogInUser{
+    color:red;
 }
 
 .tweet-action-item-cont {

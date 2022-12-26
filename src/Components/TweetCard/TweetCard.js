@@ -14,6 +14,7 @@ function TweetCard(props) {
   const token = localStorage.getItem("token");
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId");
 
   const likeTweetHandler = async () => {
     const likedBy = postData.likes.likedBy;
@@ -33,6 +34,9 @@ function TweetCard(props) {
     dispatch(PostSliceAction.setPostData({ allPost: responseData.posts }));
   };
 
+  const likedByList = postData?.likes?.likedBy;
+  let likedByLogInUser = likedByList.find((item) => item["_id"] === userId);
+
   return (
     <div className={styles["tweet-component"]}>
       <div className={styles["tweet-user-details"]}>
@@ -45,7 +49,7 @@ function TweetCard(props) {
 
       <Link
         to={`/tweet/${postData["_id"]}`}
-        style={{ color: "inherit", textDecoration: "inherit" }}
+        style={{ color: "inherit", textDecoration: "inherit", width: "100%" }}
       >
         <div className={styles["tweet-content"]}>
           <div>{postData.content}</div>
@@ -55,7 +59,10 @@ function TweetCard(props) {
 
       <div className={styles["tweet-action-container"]}>
         <div className={styles["tweet-action-item-cont"]}>
-          <FavoriteBorder onClick={likeTweetHandler} />
+          <FavoriteBorder
+            onClick={likeTweetHandler}
+            className={likedByLogInUser ? styles["likedByLogInUser"] : ""}
+          />
           <div>{postData.likes.likeCount}</div>
         </div>
 
@@ -65,6 +72,7 @@ function TweetCard(props) {
         >
           <div className={styles["tweet-action-item-cont"]}>
             <ChatBubbleOutlineIcon />
+            <div>{postData?.comments?.length}</div>
           </div>
         </Link>
 
