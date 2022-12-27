@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import PostSliceReducer from "./PostSlice";
+import BookmarkSliceReduder from "./BookmarkSlice";
 
 const store = configureStore({
-  reducer: { PostSliceReducer },
+  reducer: { PostSliceReducer, BookmarkSliceReduder },
 });
 
 export default store;

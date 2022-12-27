@@ -4,10 +4,11 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import useFetch from "../../custom-hooks/fetch-hook";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PostSliceAction } from "../../Store/PostSlice";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { addToBookmark, removeFromBookmark } from "../../Store/BookmarkAction";
+import { BookmarkSliceAction } from "../../Store/BookmarkSlice";
 
 function TweetCard(props) {
   const { postData } = props;
@@ -15,7 +16,12 @@ function TweetCard(props) {
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
+  const bookmarkData = useSelector(
+    (state) => state.BookmarkSliceReduder.bookmarkData
+  );
 
+  const likedByList = postData?.likes?.likedBy;
+  let likedByLogInUser = likedByList.find((item) => item["_id"] === userId);
   const likeTweetHandler = async () => {
     let url = likedByLogInUser
       ? `/api/posts/dislike/${postData["_id"]}`
@@ -33,8 +39,16 @@ function TweetCard(props) {
     dispatch(PostSliceAction.setPostData({ allPost: responseData.posts }));
   };
 
-  const likedByList = postData?.likes?.likedBy;
-  let likedByLogInUser = likedByList.find((item) => item["_id"] === userId);
+  const isPostBookmarked = bookmarkData.find(
+    (item) => item["_id"] === postData["_id"]
+  );
+  const bookmarkHandler = async () => {
+    if (!isPostBookmarked) {
+      dispatch(addToBookmark(sendRequest, postData));
+    } else {
+      dispatch(removeFromBookmark(sendRequest, postData));
+    }
+  };
 
   return (
     <div className={styles["tweet-component"]}>
@@ -76,7 +90,10 @@ function TweetCard(props) {
         </Link>
 
         <div className={styles["tweet-action-item-cont"]}>
-          <BookmarkBorderIcon />
+          <BookmarkBorderIcon
+            onClick={bookmarkHandler}
+            className={isPostBookmarked ? styles["postBookmarked"] : ""}
+          />
         </div>
       </div>
     </div>

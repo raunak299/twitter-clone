@@ -6,18 +6,22 @@ import NewTweetContainer from "../NewTweet/NewTweetContainer";
 import styles from "./Home.module.css";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useEffect, useState } from "react";
+import { BookmarkSliceAction } from "../../Store/BookmarkSlice";
 
 const Home = () => {
   // const postData = useDispatch((state) => state.PostSliceReducer.postData);
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     (async () => {
-      const response = await sendRequest({ url: "/api/posts" });
-      dispatch(PostSliceAction.setPostData({ allPost: response.posts }));
+      const responsePostData = await sendRequest({ url: "/api/posts" });
+      dispatch(
+        PostSliceAction.setPostData({ allPost: responsePostData.posts })
+      );
     })();
     setTimeout(() => setLoading(false), 1000);
   }, [dispatch, sendRequest]);
@@ -32,8 +36,8 @@ const Home = () => {
         </div>
         {loading && <h1>Loading !!</h1>}
         {!loading &&
-          postData.map((postData, index) => (
-            <TweetCard postData={postData} key={index} />
+          postData.map((data, index) => (
+            <TweetCard postData={data} key={index} />
           ))}
       </div>
     </Layout>

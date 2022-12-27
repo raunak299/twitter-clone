@@ -11,6 +11,7 @@ import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { useDispatch } from "react-redux";
 import { PostSliceAction } from "../../Store/PostSlice";
 import Comment from "./Comment/Comment";
+import { addToBookmark, removeFromBookmark } from "../../Store/BookmarkAction";
 
 function TweetDetail() {
   const { tweetId } = useParams();
@@ -23,6 +24,9 @@ function TweetDetail() {
 
   const [loading, setLoading] = useState(false);
   const [postData, setPostData] = useState();
+  const bookmarkData = useSelector(
+    (state) => state.BookmarkSliceReduder.bookmarkData
+  );
   const likedByList = postData?.likes?.likedBy;
   let likedByLogInUser = likedByList?.find((item) => item["_id"] === userId);
 
@@ -84,6 +88,15 @@ function TweetDetail() {
     }
   };
 
+  const isPostBookmarked = bookmarkData.find((item) => item["_id"] === tweetId);
+  const bookmarkHandler = async () => {
+    if (!isPostBookmarked) {
+      dispatch(addToBookmark(sendRequest, postData));
+    } else {
+      dispatch(removeFromBookmark(sendRequest, postData));
+    }
+  };
+
   return (
     <Layout>
       <div className={styles["tweet-details-page"]}>
@@ -121,7 +134,10 @@ function TweetDetail() {
               </div>
 
               <div className={styles["tweet-action-item-cont"]}>
-                <BookmarkBorderIcon />
+                <BookmarkBorderIcon
+                  onClick={bookmarkHandler}
+                  className={isPostBookmarked ? styles["postBookmarked"] : ""}
+                />
               </div>
             </div>
 

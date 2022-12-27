@@ -91,6 +91,10 @@
     color:red;
 }
 
+.postBookmarked{
+    color:rgb(18, 164, 18);
+}
+
 .tweet-action-item-cont {
     display: flex;
     justify-content: flex-start;
