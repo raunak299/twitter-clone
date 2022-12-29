@@ -17,10 +17,12 @@ function EmojiPicker(props) {
 
   return (
     <div className={styles["emoji-container"]}>
-      {emojiLib.map((emojirow) => (
-        <div className={styles["emoji-row"]}>
-          {emojirow.map((emoji) => (
-            <div onClick={emojiSelectHandler}>{emoji}</div>
+      {emojiLib.map((emojirow, indexrow) => (
+        <div className={styles["emoji-row"]} key={indexrow}>
+          {emojirow.map((emoji, indexcol) => (
+            <div onClick={emojiSelectHandler} key={indexcol}>
+              {emoji}
+            </div>
           ))}
         </div>
       ))}

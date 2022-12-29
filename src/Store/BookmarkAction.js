@@ -1,4 +1,5 @@
 import { BookmarkSliceAction } from "./BookmarkSlice";
+import { PostSliceAction } from "./PostSlice";
 
 const token = localStorage.getItem("token");
 
@@ -7,12 +8,13 @@ export const addToBookmark = (sendRequest, postData) => {
     const responseData = await sendRequest({
       url: `/api/users/bookmark/${postData["_id"]}`,
       method: "POST",
-      body: JSON.stringify({}),
+      //   body: JSON.stringify({}),
       headers: {
         "content-type": "application/json",
         authorization: token,
       },
     });
+
     dispatch(
       BookmarkSliceAction.setBookmarkData({
         bookmarkDataList: responseData.bookmarks,
@@ -26,7 +28,7 @@ export const removeFromBookmark = (sendRequest, postData) => {
     const responseData = await sendRequest({
       url: `/api/users/remove-bookmark/${postData["_id"]}`,
       method: "POST",
-      body: JSON.stringify({}),
+      //   body: JSON.stringify({}),
       headers: {
         "content-type": "application/json",
         authorization: token,

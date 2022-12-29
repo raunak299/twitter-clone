@@ -26,6 +26,7 @@ const Navbar = () => {
         <div className={styles["icon-container"]}>
           <TwitterIcon />
         </div>
+
         <div className={styles["icon-container"]}>
           <Link
             to="/home"
@@ -34,12 +35,20 @@ const Navbar = () => {
             <HomeIcon />
           </Link>
         </div>
+
         <div className={styles["icon-container"]}>
           <SearchIcon />
         </div>
+
         <div className={styles["icon-container"]}>
-          <TurnedInNotIcon />
+          <Link
+            to="/bookmarks"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <TurnedInNotIcon />
+          </Link>
         </div>
+
         <div className={styles["icon-container"]}>
           <Link
             to="/profile"
@@ -48,6 +57,7 @@ const Navbar = () => {
             <PermIdentityIcon />
           </Link>
         </div>
+
         <div className={styles["icon-container"]}>
           <NightlightRoundIcon />
         </div>

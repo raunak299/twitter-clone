@@ -1,6 +1,6 @@
 import ImageIcon from "@mui/icons-material/Image";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "../../Components/EmojiPicker/EmojiPicker";
 import CloseIcon from "@mui/icons-material/Close";
 import profilepic from "../../assets/profile.jpg";
@@ -9,14 +9,24 @@ import styles from "./NewTweetContainer.module.css";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { addTweetHandler } from "../../Store/PostAction";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import { editTweetHandler } from "../../Store/PostAction";
 
-function NewTweetContainer() {
+function NewTweetContainer(props) {
   const [emojiPickerVisible, setEmojiPickerVisibility] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { postData, setEditModalVisibility, setEditBtnVisibility } = props;
   const textareaRef = useRef();
+  const [tweetImg, setTweetImg] = useState("");
   const [chosenEmoji, setChosenEmoji] = useState(null);
+
+  useEffect(() => {
+    if (postData) {
+      setTweetImg(postData.pic);
+    }
+  }, [postData]);
+
   const selectEmojiHandler = (emoji) => {
     setChosenEmoji(emoji);
     textareaRef.current.value += emoji;
@@ -26,7 +36,6 @@ function NewTweetContainer() {
   //   e.target.style.height = e.target.scrollHeight + "px";
   // };
 
-  const [tweetImg, setTweetImg] = useState("");
   const addTweetImg = async (e) => {
     const file = e.target.files[0];
     const toBase64 = (file) =>
@@ -45,53 +54,30 @@ function NewTweetContainer() {
     setTweetImg("");
   };
 
+  const cancelEditingHandler = () => {
+    setEditModalVisibility(false);
+    setEditBtnVisibility(false);
+  };
+
   const { sendRequest } = useFetch();
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-
   const newTweetHandler = async () => {
-    console.log(textareaRef.current.value);
-    // console.log(tweetImg);
-    // sendRequest(
-    //   {
-    //     url: "/api/posts",
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       postData: { pic: tweetImg, content: textareaRef.current.value },
-    //     }),
-    //     headers: {
-    //       "content-type": "application/json",
-    //       authorization: token,
-    //     },
-    //   },
-    //   (data) => {
-    //     console.log(data);
-    //     console.log(data.posts[0]["_id"]);
-    // sendRequest(
-    //   {
-    //     url: `/api/posts/like/${data.posts[0]["_id"]}`,
-    //     method: "POST",
-    //     body: JSON.stringify({}),
-    //     headers: {
-    //       "content-type": "application/json",
-    //       authorization: token,
-    //     },
-    // url: `/api/comments/add/${data.posts[0]["_id"]}`,
-    // method: "POST",
-    // body: JSON.stringify({ commentData: { content: "hello", userId } }),
-    // headers: {
-    //   "content-type": "application/json",
-    //   authorization: token,
-    // },
-    //       },
-    //       (data) => {
-    //         console.log(data);
-    //       }
-    //     );
-    //   }
-    // );
-
-    dispatch(addTweetHandler(tweetImg, textareaRef.current.value, sendRequest));
+    // console.log(textareaRef.current.value);
+    if (!postData) {
+      dispatch(
+        addTweetHandler(tweetImg, textareaRef.current.value, sendRequest)
+      );
+    } else {
+      dispatch(
+        editTweetHandler(
+          tweetImg,
+          textareaRef.current.value,
+          sendRequest,
+          postData["_id"]
+        )
+      );
+    }
+    setEmojiPickerVisibility(false);
+    textareaRef.current.value = "";
     navigate("/home");
   };
 
@@ -108,7 +94,9 @@ function NewTweetContainer() {
           type="text"
           placeholder="Whats Happening ?"
           ref={textareaRef}
+          defaultValue={postData ? postData.content : ""}
         />
+
         {tweetImg && (
           <div className={styles["tweet-img"]}>
             <CloseIcon onClick={removeTweetImg} />
@@ -126,9 +114,12 @@ function NewTweetContainer() {
               onClick={() => setEmojiPickerVisibility(!emojiPickerVisible)}
             />
           </div>
-          <button className={styles["tweet-btn"]} onClick={newTweetHandler}>
-            Tweet
-          </button>
+          <div className={styles["btn-container"]}>
+            <button className={styles["tweet-btn"]} onClick={newTweetHandler}>
+              {postData ? "Edit" : "Tweet"}
+            </button>
+            {postData && <button onClick={cancelEditingHandler}>Cancel</button>}
+          </div>
         </div>
         {emojiPickerVisible && (
           <div className={styles["emoji-picker"]}>

@@ -4,6 +4,7 @@ const useFetch = () => {
   // const [error, setError] = useState("");
 
   const sendRequest = useCallback(async (requestConfig) => {
+    console.log(requestConfig);
     try {
       const response = await fetch(requestConfig.url, {
         method: requestConfig.method ? requestConfig.method : "GET",
@@ -21,7 +22,7 @@ const useFetch = () => {
       return data;
     } catch (error) {
       console.log(error);
-      return error;
+      // return error;
     }
   }, []);
 

@@ -4,6 +4,7 @@
     width:100%;
     padding-top: 4.5rem;
     padding-bottom: 4.5rem;
+
 }
 
 .tweet-component{
@@ -14,7 +15,11 @@
     width:100%;
     border: solid var(--main-border-color);
     padding:1.2rem;
+}
 
+.edit-tweet-modal{
+  border: solid var(--main-border-color);
+  padding: 1rem;
 }
 
 .tweet-user-details{
@@ -22,7 +27,32 @@
     justify-content: flex-start;
     align-items: flex-start;
     width:100%;
-    margin-bottom: .5rem;
+    margin-bottom: .8rem;
+}
+
+.tweet-user-details div:nth-child(1){
+    width:100%;
+    display:flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.edit-post-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.edit-post-container div{
+  border: solid var(--main-theme-color);
+  padding:.3rem 1rem ;
+  border-radius:5px;
+  font-weight: bold;
+}
+
+.edit-post-container svg{
+    margin-bottom:.2rem;
 }
 
 

@@ -7,6 +7,7 @@ import Authentication from "./Pages/Authentication/Authentication";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import Profile from "./Pages/Profile/Profile";
 import TweetDetail from "./Pages/TweetDetail/TweetDetail";
+import Bookmark from "./Pages/Bookmark/Bookmark";
 
 function App() {
   const login = localStorage.getItem("token");
@@ -31,7 +32,14 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/bookmarks" element={<h2>bookmark page</h2>} />
+      <Route
+        path="/bookmarks"
+        element={
+          <PrivateRoute>
+            <Bookmark />
+          </PrivateRoute>
+        }
+      />
       <Route path="/search" element={<h2>search page</h2>} />
 
       <Route path="/authentication" element={<Authentication />} />

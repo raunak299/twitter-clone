@@ -104,14 +104,25 @@
 
 
 
-
 .tweet-btn{
-    border-radius: 13px;
+    border-radius: 50px;
     font-weight: bold;
     color:whitesmoke;
     background: var(--main-theme-color);
     padding:.5rem 1rem;
-    border:none;
+    border: solid var(--main-theme-color);
+
+}
+
+
+.btn-container button:nth-child(2){
+    border-radius: 50px;
+    font-weight: bold;
+    color:whitesmoke;
+    background-color: var(--main-background-color);
+    border: solid var(--main-theme-color);
+    padding:.5rem 1rem;
+    margin-left:.5rem;
 }
 
 @media(min-width:700px){
@@ -141,7 +152,19 @@
     font-size:1.5rem;
     background: var(--main-theme-color);
     padding:.5rem 1rem;
-    border:none;
+    border: solid var(--main-theme-color);
 
 }
+
+.btn-container button:nth-child(2){
+    border-radius: 20px;
+    font-weight: bold;
+    color:whitesmoke;
+    font-size:1.5rem;
+    background-color: var(--main-background-color);
+    border: solid var(--main-theme-color);
+    padding:.5rem 1rem;
+}
+
+
 }

@@ -20,7 +20,12 @@ const Footer = () => {
           <SearchIcon />
         </div>
         <div className={styles["icon-container"]}>
-          <TurnedInNotIcon />
+          <Link
+            to="/bookmarks"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <TurnedInNotIcon />
+          </Link>
         </div>
       </div>
     </>

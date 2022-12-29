@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PostSliceAction } from "../../Store/PostSlice";
 import { Link } from "react-router-dom";
 import { addToBookmark, removeFromBookmark } from "../../Store/BookmarkAction";
-import { BookmarkSliceAction } from "../../Store/BookmarkSlice";
+import { likeTweetHandler } from "../../Store/PostAction";
 
 function TweetCard(props) {
   const { postData } = props;
@@ -17,26 +17,17 @@ function TweetCard(props) {
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
   const bookmarkData = useSelector(
-    (state) => state.BookmarkSliceReduder.bookmarkData
+    (state) => state.BookmarkSliceReducer.bookmarkData
   );
 
   const likedByList = postData?.likes?.likedBy;
   let likedByLogInUser = likedByList.find((item) => item["_id"] === userId);
-  const likeTweetHandler = async () => {
+
+  const likeTweet = async () => {
     let url = likedByLogInUser
       ? `/api/posts/dislike/${postData["_id"]}`
       : `/api/posts/like/${postData["_id"]}`;
-
-    const responseData = await sendRequest({
-      url,
-      method: "POST",
-      body: JSON.stringify({}),
-      headers: {
-        "content-type": "application/json",
-        authorization: token,
-      },
-    });
-    dispatch(PostSliceAction.setPostData({ allPost: responseData.posts }));
+    dispatch(likeTweetHandler(sendRequest, url));
   };
 
   const isPostBookmarked = bookmarkData.find(
@@ -73,7 +64,7 @@ function TweetCard(props) {
       <div className={styles["tweet-action-container"]}>
         <div className={styles["tweet-action-item-cont"]}>
           <FavoriteBorder
-            onClick={likeTweetHandler}
+            onClick={likeTweet}
             className={likedByLogInUser ? styles["likedByLogInUser"] : ""}
           />
           <div>{postData.likes.likeCount}</div>
