@@ -10,11 +10,12 @@ import AddTweetBtn from "../AddTweetBtn/AddTweetBtn";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const userId = localStorage.getItem("userId");
   return (
     <>
       <div className={styles["navbar-small"]}>
         <Link
-          to="/profile"
+          to={`/profile/${userId}`}
           style={{ color: "inherit", textDecoration: "inherit" }}
         >
           <PermIdentityIcon />
@@ -37,7 +38,12 @@ const Navbar = () => {
         </div>
 
         <div className={styles["icon-container"]}>
-          <SearchIcon />
+          <Link
+            to="/search"
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <SearchIcon />
+          </Link>
         </div>
 
         <div className={styles["icon-container"]}>
@@ -51,7 +57,7 @@ const Navbar = () => {
 
         <div className={styles["icon-container"]}>
           <Link
-            to="/profile"
+            to={`/profile/${userId}`}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             <PermIdentityIcon />
