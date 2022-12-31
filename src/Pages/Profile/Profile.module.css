@@ -1,0 +1,94 @@
+.profile-sec{
+    width:100%;
+    padding-top:5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-modal{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding:1rem;
+    border:solid var(--main-border-color);
+}
+
+.profile-modal div:nth-child(1){
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom:1rem;
+}
+
+.profile-modal div:nth-child(1) img{
+    background: white;
+    width: 6rem;
+    height:6rem;
+    border-radius: 50%;
+}
+
+.profile-modal div:nth-child(1) button{
+border-radius: 50px;
+font-weight: bold;
+padding:.5rem 1rem;
+background: var(--main-background-color);
+color:var(--main-text-color);
+border: solid var(--secondary-background-color);
+}
+
+.profile-data{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.profile-data div:nth-child(1){
+    font-weight:bold;
+    font-size:1.5rem;
+}
+
+.followers-sec{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight:500;
+}
+
+.followers-sec span{
+    padding-right:1rem;
+    color:grey;
+}
+
+@media(min-width:700px){
+    .profile-sec{
+        width:70%;
+    }
+
+    .profile-modal div:nth-child(1) button{
+        font-size:1.2rem;
+    }
+
+   
+}
+
+@media(min-width:950px){
+    .profile-sec{
+        width:45%;
+    }
+
+ 
+
+    .profile-modal div:nth-child(1) img{
+        height:9rem;
+        width:9rem;
+    }
+
+}

@@ -80,6 +80,11 @@
         font-size:1.5rem;
     }
 
+    .search-input-cont svg {
+          height:2rem;
+          width:2rem;
+    }
+
  
 
     .search-input-cont input{
