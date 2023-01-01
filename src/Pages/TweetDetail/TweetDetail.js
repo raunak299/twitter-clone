@@ -15,6 +15,7 @@ import { addToBookmark, removeFromBookmark } from "../../Store/BookmarkAction";
 import { addCommentHandler, likeTweetHandler } from "../../Store/PostAction";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NewTweetContainer from "../NewTweet/NewTweetContainer";
+import { Link } from "react-router-dom";
 
 function TweetDetail() {
   const { tweetId } = useParams();
@@ -92,13 +93,29 @@ function TweetDetail() {
           <div className={styles["tweet-component"]}>
             <div className={styles["tweet-user-details"]}>
               <div>
-                <img
-                  src={pic}
-                  className={styles["user-pic"]}
-                  alt="profile-pic"
-                ></img>
+                <Link
+                  to={`/profile/${postData?.userId}`}
+                  style={{
+                    color: "var(--main-text-color)",
+                    textDecoration: "initial",
+                  }}
+                >
+                  <img
+                    src={postData.userPic}
+                    className={styles["user-pic"]}
+                    alt="profile-pic"
+                  ></img>
+                </Link>
                 <div className={styles["user-name-date"]}>
-                  <div>Raunak Raj</div>
+                  <Link
+                    to={`/profile/${postData?.userId}`}
+                    style={{
+                      color: "var(--main-text-color)",
+                      textDecoration: "initial",
+                    }}
+                  >
+                    <div>Raunak Raj</div>
+                  </Link>
                   <div>27-12-2022</div>
                 </div>
               </div>
@@ -111,7 +128,6 @@ function TweetDetail() {
                 {editBtnVisible && <div onClick={editPostHandler}>Edit</div>}
               </div>
             </div>
-
             <div className={styles["tweet-content"]}>
               <div>{postData.content}</div>
               {postData.pic && <img src={postData.pic} alt="pic"></img>}

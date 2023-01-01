@@ -4,8 +4,7 @@ export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-    // let userData = await sendRequest({ url: `/api/users/${userId}` });
-    // // console.log(userData);
+    let userData = await sendRequest({ url: `/api/users/${userId}` });
     let response = await sendRequest({
       url: "/api/posts",
       method: "POST",
@@ -19,6 +18,7 @@ export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
             dislikedBy: [],
           },
           comments: [],
+          userPic: userData.user.pic,
           userId,
         },
       }),
@@ -27,6 +27,7 @@ export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
         authorization: token,
       },
     });
+    console.log(response.posts);
     dispatch(PostSliceAction.setPostData({ allPost: response.posts }));
   };
 };
@@ -34,7 +35,7 @@ export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
 export const addCommentHandler = (sendRequest, postData, content) => {
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-
+  console.log(postData["_id"]);
   return async (dispatch) => {
     let userData = await sendRequest({ url: `/api/users/${userId}` });
     const responseData = await sendRequest({
@@ -84,6 +85,7 @@ export const editTweetHandler = (
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
+    let userData = await sendRequest({ url: `/api/users/${userId}` });
     let response = await sendRequest({
       url: `/api/posts/edit/${postId}`,
       method: "POST",
@@ -98,6 +100,7 @@ export const editTweetHandler = (
           },
           comments: [],
           userId,
+          userPic: userData.user.pic,
         },
       }),
       headers: {

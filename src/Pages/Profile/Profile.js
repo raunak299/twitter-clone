@@ -6,6 +6,7 @@ import TweetDetail from "../TweetDetail/TweetDetail";
 import styles from "./Profile.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import TweetCard from "../../Components/TweetCard/TweetCard";
 
 function Profile() {
   const navigate = useNavigate();
@@ -18,11 +19,11 @@ function Profile() {
 
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(false);
-  const [postList, setPostList] = useState([]);
+  const [postListUser, setPostListUser] = useState([]);
   const { userId } = useParams();
   const { sendRequest } = useFetch();
-  const usersList = useSelector((state) => state.UserSliceReducer.users);
-  // const postList = useSelector((state) => state.PostSliceReducer.postData);
+  // const usersList = useSelector((state) => state.UserSliceReducer.users);
+  const postList = useSelector((state) => state.PostSliceReducer.postData);
 
   useEffect(() => {
     setLoading(true);
@@ -34,16 +35,17 @@ function Profile() {
         url: `/api/users/${userId}`,
       });
 
+      console.log(userDataResponse.user);
+
       const postList = postDataResponse?.posts.filter(
         (post) => post.username === userDataResponse?.user.username
       );
 
       setUserData(userDataResponse.user);
-      setPostList(postList);
+      setPostListUser(postList);
       setLoading(false);
-      // setUserData(userDataResponse.user);
     })();
-  }, [sendRequest, userId]);
+  }, [sendRequest, userId, postList]);
 
   return (
     <Layout>
@@ -54,6 +56,7 @@ function Profile() {
             <div>
               <img src={userData?.pic} />
               <button>Edit Profile</button>
+              <button onClick={logoutHandler}></button>
             </div>
             <div className={styles["profile-data"]}>
               <div>Raunak Raj</div>
@@ -63,7 +66,12 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div></div>
+          <h3>Tweets</h3>
+          <div className={styles["my-tweets"]}>
+            {postListUser.map((postData, index) => (
+              <TweetCard postData={postData} key={index} />
+            ))}
+          </div>
         </div>
       )}
     </Layout>

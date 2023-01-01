@@ -44,9 +44,30 @@ function TweetCard(props) {
   return (
     <div className={styles["tweet-component"]}>
       <div className={styles["tweet-user-details"]}>
-        <img src={pic} className={styles["user-pic"]}></img>
+        <Link
+          to={`/profile/${postData?.userId}`}
+          style={{
+            color: "var(--main-text-color)",
+            textDecoration: "initial",
+          }}
+        >
+          <img
+            src={postData.userPic}
+            className={styles["user-pic"]}
+            alt="userPic"
+          />
+        </Link>
+
         <div className={styles["user-name-date"]}>
-          <div>Raunak Raj</div>
+          <Link
+            to={`/profile/${postData?.userId}`}
+            style={{
+              color: "var(--main-text-color)",
+              textDecoration: "initial",
+            }}
+          >
+            <div>{postData.username}</div>
+          </Link>
           <div>27-12-2022</div>
         </div>
       </div>

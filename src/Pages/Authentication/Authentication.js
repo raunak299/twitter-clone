@@ -117,7 +117,7 @@ function Authentication() {
       url,
       method: "POST",
       body: JSON.stringify({
-        username: emailRef.current.value,
+        username: emailRef.current.value.toLowerCase(),
         password: passwordRef.current.value,
         firstname: "",
         lastname: "",

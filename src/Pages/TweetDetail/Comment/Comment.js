@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { PostSliceAction } from "../../../Store/PostSlice";
 import useFetch from "../../../custom-hooks/fetch-hook";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { initializeConnect } from "react-redux/es/components/connect";
 
 function Comment(props) {
   const { commentData } = props;
@@ -34,13 +36,27 @@ function Comment(props) {
   };
 
   const noOfLikes = commentData?.votes?.upvotedBy?.length;
+  console.log(commentData);
 
   return (
     <div className={styles["comment"]}>
       <div className={styles["comment-sec"]}>
-        <img src={commentData.userData.pic}></img>
+        <Link
+          to={`/profile/${commentData?.userData["_id"]}`}
+          style={{ color: "initial", textDecoration: "initial" }}
+        >
+          <img src={commentData.userData?.pic}></img>
+        </Link>
         <div className={styles["comment-details"]}>
-          <h3>{commentData.username}</h3>
+          <Link
+            to={`/profile/${commentData?.userData["_id"]}`}
+            style={{
+              color: "var(--main-text-color)",
+              textDecoration: "initial",
+            }}
+          >
+            <h3>{commentData.username}</h3>
+          </Link>
           <div className={styles["comment-content"]}>{commentData.content}</div>
           <div className={styles["comment-action-sec"]}>
             <div className={styles["comment-like-sec"]}>

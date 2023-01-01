@@ -1,6 +1,7 @@
 .profile-sec{
     width:100%;
-    padding-top:5rem;
+    padding-top:4.5rem;
+    padding-bottom:5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -67,13 +68,31 @@ border: solid var(--secondary-background-color);
     color:grey;
 }
 
+.profile-sec h3{
+    padding:1rem;
+    width:100%;
+    background-color: var(--secondary-background-color);
+    text-align: center;
+    /* color:var(--main-theme-color) */
+}
+
+.my-tweets{
+    width:100%;
+}
+
 @media(min-width:700px){
     .profile-sec{
         width:70%;
+        padding-top:2.5rem;
     }
 
+    
     .profile-modal div:nth-child(1) button{
         font-size:1.2rem;
+    }
+
+    .profile-sec h3{
+        font-size:1.5rem;
     }
 
    

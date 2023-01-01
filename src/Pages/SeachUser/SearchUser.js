@@ -28,7 +28,10 @@ function SearchUser() {
       return;
     }
     const foundUserTemp = userData.filter((user) => {
-      return user.username.substr(0, length) === inputRef.current.value;
+      return (
+        user.username.substr(0, length).toUpperCase() ===
+        inputRef.current.value.toUpperCase()
+      );
     });
     setFoundUsers(foundUserTemp);
   };

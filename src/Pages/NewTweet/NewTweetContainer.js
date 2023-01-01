@@ -84,7 +84,7 @@ function NewTweetContainer(props) {
   return (
     <div className={styles["new-tweet-container"]}>
       <img
-        src={profilepic}
+        src={postData?.userPic}
         alt="profile-pic"
         className={styles["profile-pic"]}
       />
