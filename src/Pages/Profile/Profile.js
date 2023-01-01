@@ -10,6 +10,9 @@ import TweetCard from "../../Components/TweetCard/TweetCard";
 import { Token } from "@mui/icons-material";
 import { UserSliceAction } from "../../Store/UserSlice";
 import { followHandler } from "../../Store/UserAction";
+import OverlayModal from "../../Components/OverlayModal/OverlayModal";
+import { Link } from "react-router-dom";
+// import { set } from "immer/dist/internal";
 
 function Profile() {
   const navigate = useNavigate();
@@ -84,41 +87,108 @@ function Profile() {
   //   setTweetImg("");
   // };
 
-  const editProfileDataHandler = async () => {};
+  const [editModalVisibility, setEditModalVisibility] = useState(false);
+  const [followersModalVisibility, setFollowersModalVisibility] =
+    useState(false);
+  const [followingModalVisibility, setFollowingModalVisibility] =
+    useState(false);
+
+  const closeModalHandler = (e) => {
+    console.log(e);
+    if (e.target.id === "overlay-modal") {
+      // console.log()
+      return;
+    }
+    followersModalVisibility && setFollowersModalVisibility(false);
+    editModalVisibility && setEditModalVisibility(false);
+    followingModalVisibility && setFollowingModalVisibility(false);
+  };
+  const editProfileDataHandler = async () => {
+    // console.log("modal");
+    setEditModalVisibility(true);
+  };
+
+  const followersModalHandler = async (e) => {
+    setFollowersModalVisibility(true);
+  };
+
+  const followingModalHandler = async (e) => {
+    setFollowingModalVisibility(true);
+  };
+
+  console.log(userData.following);
 
   return (
-    <Layout>
-      {loading && <h1>Loading!!</h1>}
-      {!loading && postList.length > 0 && userData && (
-        <div className={styles["profile-sec"]}>
-          <div className={styles["profile-modal"]}>
-            <div>
-              <img src={userData?.pic} />
-              {loggedInUserId === userId && (
-                <button onClick={editProfileDataHandler}>Edit Profile</button>
-              )}
-              {loggedInUserId !== userId && (
-                <button onClick={followHandlerFunc}>Follow</button>
-              )}
-              <button onClick={logoutHandler}></button>
-            </div>
-            <div className={styles["profile-data"]}>
-              <div>Raunak Raj</div>
-              <div className={styles["followers-sec"]}>
-                <span>{`${userData?.following?.length} following`}</span>
-                <span>{`${userData?.followers?.length} followers`}</span>
+    <div
+      className={`${editModalVisibility ? styles["modal-open"] : ""}`}
+      onClick={closeModalHandler}
+    >
+      <Layout>
+        {editModalVisibility && <OverlayModal></OverlayModal>}
+        {followersModalVisibility && (
+          <OverlayModal>
+            <div className={styles["followers-overlay"]}>
+              <div className={styles["followers-details"]}>
+                {userData?.followers.map((user) => (
+                  <Link to={`/profile/${userId}`}>
+                    <img src={user?.pic}></img>
+                    <div>{user.username}</div>
+                  </Link>
+                ))}
               </div>
             </div>
+          </OverlayModal>
+        )}
+        {followingModalVisibility && (
+          <OverlayModal>
+            <div className={styles["followers-overlay"]}>
+              <div className={styles["followers-details"]}>
+                {userData?.following.map((user) => (
+                  <Link to={`/profile/${userId}`}>
+                    <img src={user?.pic}></img>
+                    <div>{user.username}</div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </OverlayModal>
+        )}
+        {loading && <h1>Loading!!</h1>}
+        {!loading && postList.length > 0 && userData && (
+          <div className={styles["profile-sec"]}>
+            <div className={styles["profile-modal"]}>
+              <div>
+                <img src={userData?.pic} />
+                {loggedInUserId === userId && (
+                  <button onClick={editProfileDataHandler}>Edit Profile</button>
+                )}
+                {loggedInUserId !== userId && (
+                  <button onClick={followHandlerFunc}>Follow</button>
+                )}
+                <button onClick={logoutHandler}></button>
+              </div>
+              <div className={styles["profile-data"]}>
+                <div>{userData.username}</div>
+                <div className={styles["followers-sec"]}>
+                  <span
+                    onClick={followingModalHandler}
+                  >{`${userData?.following?.length} following`}</span>
+                  <span
+                    onClick={followersModalHandler}
+                  >{`${userData?.followers?.length} followers`}</span>
+                </div>
+              </div>
+            </div>
+            <h3>Tweets</h3>
+            <div className={styles["my-tweets"]}>
+              {postListUser.map((postData, index) => (
+                <TweetCard postData={postData} key={index} />
+              ))}
+            </div>
           </div>
-          <h3>Tweets</h3>
-          <div className={styles["my-tweets"]}>
-            {postListUser.map((postData, index) => (
-              <TweetCard postData={postData} key={index} />
-            ))}
-          </div>
-        </div>
-      )}
-    </Layout>
+        )}
+      </Layout>
+    </div>
   );
 }
 

@@ -32,6 +32,7 @@ code {
   --main-text-color:whitesmoke;
   --main-icon-color:whitesmoke;
   --main-border-color:rgb(32, 35, 39);
+  --overlay-background-color:rgba(74, 119, 143, 0.5);
 }
 
 .light-theme{
@@ -42,4 +43,5 @@ code {
    --main-text-color:black;
    --main-icon-color:black;
    --main-border-color:rgb(239, 243, 244);
+   --overlay-background-color:rgba(74, 119, 143, 0.5);
 }
