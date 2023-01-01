@@ -580,7 +580,7 @@ export const followUserHandler = function (schema, request) {
     return new Response(
       200,
       {},
-      { user: updatedUser, followUser: updatedFollowUser }
+      { user: updatedUser, allUsers: this.db.users }
     );
   } catch (error) {
     return new Response(
@@ -645,7 +645,7 @@ export const unfollowUserHandler = function (schema, request) {
     return new Response(
       200,
       {},
-      { user: updatedUser, followUser: updatedFollowUser }
+      { user: updatedUser, allUsers: this.db.users }
     );
   } catch (error) {
     return new Response(

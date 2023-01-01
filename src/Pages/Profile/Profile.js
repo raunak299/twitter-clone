@@ -5,11 +5,16 @@ import useFetch from "../../custom-hooks/fetch-hook";
 import TweetDetail from "../TweetDetail/TweetDetail";
 import styles from "./Profile.module.css";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TweetCard from "../../Components/TweetCard/TweetCard";
+import { Token } from "@mui/icons-material";
+import { UserSliceAction } from "../../Store/UserSlice";
+import { followHandler } from "../../Store/UserAction";
 
 function Profile() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -21,8 +26,9 @@ function Profile() {
   const [userData, setUserData] = useState(false);
   const [postListUser, setPostListUser] = useState([]);
   const { userId } = useParams();
+  const loggedInUserId = localStorage.getItem("userId");
   const { sendRequest } = useFetch();
-  // const usersList = useSelector((state) => state.UserSliceReducer.users);
+  const usersList = useSelector((state) => state.UserSliceReducer.users);
   const postList = useSelector((state) => state.PostSliceReducer.postData);
 
   useEffect(() => {
@@ -35,7 +41,7 @@ function Profile() {
         url: `/api/users/${userId}`,
       });
 
-      console.log(userDataResponse.user);
+      // console.log(userDataResponse.user);
 
       const postList = postDataResponse?.posts.filter(
         (post) => post.username === userDataResponse?.user.username
@@ -45,17 +51,55 @@ function Profile() {
       setPostListUser(postList);
       setLoading(false);
     })();
-  }, [sendRequest, userId, postList]);
+  }, [sendRequest, userId, postList, usersList]);
+
+  const isUserAlreadyFollowed = userData?.followers?.filter(
+    (item) => item["_id"] === loggedInUserId
+  );
+
+  const followHandlerFunc = async () => {
+    const url =
+      isUserAlreadyFollowed.length > 0
+        ? `/api/users/unfollow/${userId}`
+        : `/api/users/follow/${userId}`;
+    dispatch(followHandler(sendRequest, url, userId));
+  };
+
+  const [profilePic, setProfilePic] = useState("");
+  const addProfilePic = async (e) => {
+    const file = e.target.files[0];
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    let base64File = await toBase64(file);
+    setProfilePic(base64File);
+  };
+
+  // const removeTweetImg = () => {
+  //   setTweetImg("");
+  // };
+
+  const editProfileDataHandler = async () => {};
 
   return (
     <Layout>
       {loading && <h1>Loading!!</h1>}
-      {!loading && (
+      {!loading && postList.length > 0 && userData && (
         <div className={styles["profile-sec"]}>
           <div className={styles["profile-modal"]}>
             <div>
               <img src={userData?.pic} />
-              <button>Edit Profile</button>
+              {loggedInUserId === userId && (
+                <button onClick={editProfileDataHandler}>Edit Profile</button>
+              )}
+              {loggedInUserId !== userId && (
+                <button onClick={followHandlerFunc}>Follow</button>
+              )}
               <button onClick={logoutHandler}></button>
             </div>
             <div className={styles["profile-data"]}>

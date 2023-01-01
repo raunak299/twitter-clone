@@ -6,3 +6,18 @@ export const getUsersData = (sendRequest) => {
     dispatch(UserSliceAction.setUserData({ usersList: response.users }));
   };
 };
+
+export const followHandler = (sendRequest, url, userId) => {
+  //   console.log(sendRequest);
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    const response = await sendRequest({
+      url,
+      method: "POST",
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(UserSliceAction.setUserData({ usersList: response.allUsers }));
+  };
+};
