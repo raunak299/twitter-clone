@@ -23,6 +23,7 @@ function Profile() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("email");
+    localStorage.removeItem("profilePic");
     navigate("/authentication");
   };
 
@@ -212,7 +213,14 @@ function Profile() {
                 {loggedInUserId !== userId && (
                   <button onClick={followHandlerFunc}>Follow</button>
                 )}
-                <button onClick={logoutHandler}></button>
+                {loggedInUserId === userId && (
+                  <button
+                    onClick={logoutHandler}
+                    className={styles["logout-button"]}
+                  >
+                    Logout
+                  </button>
+                )}
               </div>
               <div className={styles["profile-data"]}>
                 <div>{userData.username}</div>

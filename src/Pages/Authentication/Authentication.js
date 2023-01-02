@@ -106,6 +106,7 @@ function Authentication() {
     localStorage.setItem("token", data.encodedToken);
     localStorage.setItem("email", data[userType].username);
     localStorage.setItem("userId", data[userType]["_id"]);
+    localStorage.setItem("profilePic", data[userType].pic);
     navigate(location.state?.from?.pathname ?? "/");
   };
 

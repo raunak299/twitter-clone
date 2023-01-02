@@ -20,6 +20,7 @@ function NewTweetContainer(props) {
   const textareaRef = useRef();
   const [tweetImg, setTweetImg] = useState("");
   const [chosenEmoji, setChosenEmoji] = useState(null);
+  const profilePic = localStorage.getItem("profilePic");
 
   useEffect(() => {
     if (postData) {
@@ -84,7 +85,7 @@ function NewTweetContainer(props) {
   return (
     <div className={styles["new-tweet-container"]}>
       <img
-        src={postData?.userPic}
+        src={profilePic}
         alt="profile-pic"
         className={styles["profile-pic"]}
       />

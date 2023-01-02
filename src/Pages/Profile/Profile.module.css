@@ -50,6 +50,19 @@ color:var(--main-text-color);
 border: solid var(--secondary-background-color);
 }
 
+.logout-button{
+    border-radius: 50px;
+font-weight: bold;
+padding:.5rem 1rem;
+background: var(--main-background-color);
+color:var(--main-text-color);
+border: solid var(--secondary-background-color);
+}
+
+.logout-button:hover{
+    background: rgb(216, 53, 53);
+}
+
 .profile-data{
     width:100%;
     display: flex;
@@ -211,6 +224,14 @@ color:var(--main-background-color);
     
     .profile-modal div:nth-child(1) button{
         font-size:1.2rem;
+    }
+
+    .logout-button{
+        font-size:1.2rem;
+    }
+    .logout-button:hover{
+        background: rgb(216, 53, 53);
+        color:white;
     }
 
     .profile-sec h3{

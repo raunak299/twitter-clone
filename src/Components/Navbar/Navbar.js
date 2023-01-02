@@ -8,9 +8,22 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 // import AddIcon from "@mui/icons-material/Add";
 import AddTweetBtn from "../AddTweetBtn/AddTweetBtn";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import themeContext from "../../Store/themeContext";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const userId = localStorage.getItem("userId");
+
+  const { theme, themeHandler } = useContext(themeContext);
+  const changeThemeHandler = () => {
+    themeHandler();
+  };
+
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
   return (
     <>
       <div className={styles["navbar-small"]}>
@@ -20,7 +33,7 @@ const Navbar = () => {
         >
           <PermIdentityIcon />
         </Link>
-        <NightlightRoundIcon />
+        <NightlightRoundIcon onClick={changeThemeHandler} />
       </div>
 
       <div className={styles["navbar-large"]}>
@@ -64,7 +77,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className={styles["icon-container"]}>
+        <div className={styles["icon-container"]} onClick={changeThemeHandler}>
           <NightlightRoundIcon />
         </div>
         <AddTweetBtn />
