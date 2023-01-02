@@ -12,13 +12,13 @@ z-index:10;}
 
 .modal{
     width:90vw;
-    height:40vh;
+    height:50vh;
     padding:1rem;
     background: var(--main-background-color);
 }
 
 @media(min-width:700px){
     .modal{
-    width:40vw;
+    width:45vw;
     height:50vh;}
 }

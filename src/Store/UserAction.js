@@ -8,7 +8,6 @@ export const getUsersData = (sendRequest) => {
 };
 
 export const followHandler = (sendRequest, url, userId) => {
-  //   console.log(sendRequest);
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     const response = await sendRequest({
@@ -19,5 +18,22 @@ export const followHandler = (sendRequest, url, userId) => {
       },
     });
     dispatch(UserSliceAction.setUserData({ usersList: response.allUsers }));
+  };
+};
+
+export const editProfileHandler = (sendRequest, user, profilePic, bio) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    const response = await sendRequest({
+      url: "/api/users/edit",
+      method: "POST",
+      body: JSON.stringify({
+        userData: { ...user, pic: profilePic, bio },
+      }),
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(UserSliceAction.setUserData({ usersList: response }));
   };
 };

@@ -132,6 +132,7 @@ export const users = [
     password: "123456789",
     firstname: "",
     lastname: "",
+    bio: "Backend Developer",
     followers: [],
     following: [
       {
@@ -173,6 +174,7 @@ export const users = [
     updatedAt: "2023-01-01T19:29:44+05:30",
     username: "akarshitak@gmail.com",
     password: "123456789",
+    bio: "MERN stack developer",
     pic: "https://res.cloudinary.com/ducugiwdi/image/upload/v1672564959/profile5_olcnqw.jpg",
     firstname: "",
     lastname: "",

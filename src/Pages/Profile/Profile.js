@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Layout from "../../Components/Layout/Layout";
 import useFetch from "../../custom-hooks/fetch-hook";
@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import TweetCard from "../../Components/TweetCard/TweetCard";
 import { Token } from "@mui/icons-material";
 import { UserSliceAction } from "../../Store/UserSlice";
-import { followHandler } from "../../Store/UserAction";
+import { editProfileHandler, followHandler } from "../../Store/UserAction";
 import OverlayModal from "../../Components/OverlayModal/OverlayModal";
 import { Link } from "react-router-dom";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 // import { set } from "immer/dist/internal";
 
 function Profile() {
@@ -68,21 +69,6 @@ function Profile() {
     dispatch(followHandler(sendRequest, url, userId));
   };
 
-  const [profilePic, setProfilePic] = useState("");
-  const addProfilePic = async (e) => {
-    const file = e.target.files[0];
-    const toBase64 = (file) =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-
-    let base64File = await toBase64(file);
-    setProfilePic(base64File);
-  };
-
   // const removeTweetImg = () => {
   //   setTweetImg("");
   // };
@@ -94,9 +80,8 @@ function Profile() {
     useState(false);
 
   const closeModalHandler = (e) => {
-    console.log(e);
-    if (e.target.id === "overlay-modal") {
-      // console.log()
+    // console.log(e);
+    if (e.target.id !== "overlay-modal") {
       return;
     }
     followersModalVisibility && setFollowersModalVisibility(false);
@@ -116,7 +101,35 @@ function Profile() {
     setFollowingModalVisibility(true);
   };
 
-  console.log(userData.following);
+  const bioref = useRef();
+  const [profilePic, setProfilePic] = useState("");
+  const addProfilePic = async (e) => {
+    const file = e.target.files[0];
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    let base64File = await toBase64(file);
+    setProfilePic(base64File);
+  };
+
+  const updateProfileHandler = () => {
+    console.log(profilePic);
+    console.log(bioref.current.value);
+    dispatch(
+      editProfileHandler(
+        sendRequest,
+        userData,
+        profilePic,
+        bioref.current.value
+      )
+    );
+    setEditModalVisibility(false);
+  };
 
   return (
     <div
@@ -124,13 +137,39 @@ function Profile() {
       onClick={closeModalHandler}
     >
       <Layout>
-        {editModalVisibility && <OverlayModal></OverlayModal>}
+        {editModalVisibility && (
+          <OverlayModal>
+            <div className={styles["edit-profile-overlay"]}>
+              <div className={styles["edit-profile-picture"]}>
+                <img src={profilePic ? profilePic : userData.pic}></img>
+                <input
+                  type="file"
+                  id="edit-profile-picture"
+                  onChange={addProfilePic}
+                />
+                <CameraAltIcon />
+              </div>
+              <textarea placeholder="Bio" ref={bioref} />
+              <div className={styles["edit-profile-btn-sec"]}>
+                <button onClick={updateProfileHandler}>Update</button>
+              </div>
+            </div>
+          </OverlayModal>
+        )}
         {followersModalVisibility && (
           <OverlayModal>
             <div className={styles["followers-overlay"]}>
-              <div className={styles["followers-details"]}>
+              <div
+                className={styles["followers-details"]}
+                onClick={() => {
+                  followersModalVisibility &&
+                    setFollowersModalVisibility(false);
+                  followingModalVisibility &&
+                    setFollowingModalVisibility(false);
+                }}
+              >
                 {userData?.followers.map((user) => (
-                  <Link to={`/profile/${userId}`}>
+                  <Link to={`/profile/${user["_id"]}`}>
                     <img src={user?.pic}></img>
                     <div>{user.username}</div>
                   </Link>
@@ -142,9 +181,17 @@ function Profile() {
         {followingModalVisibility && (
           <OverlayModal>
             <div className={styles["followers-overlay"]}>
-              <div className={styles["followers-details"]}>
+              <div
+                className={styles["followers-details"]}
+                onClick={() => {
+                  followersModalVisibility &&
+                    setFollowersModalVisibility(false);
+                  followingModalVisibility &&
+                    setFollowingModalVisibility(false);
+                }}
+              >
                 {userData?.following.map((user) => (
-                  <Link to={`/profile/${userId}`}>
+                  <Link to={`/profile/${user["_id"]}`}>
                     <img src={user?.pic}></img>
                     <div>{user.username}</div>
                   </Link>
@@ -169,6 +216,7 @@ function Profile() {
               </div>
               <div className={styles["profile-data"]}>
                 <div>{userData.username}</div>
+                <div>{userData.bio}</div>
                 <div className={styles["followers-sec"]}>
                   <span
                     onClick={followingModalHandler}
