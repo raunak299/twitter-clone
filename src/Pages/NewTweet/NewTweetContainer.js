@@ -119,7 +119,14 @@ function NewTweetContainer(props) {
             <button className={styles["tweet-btn"]} onClick={newTweetHandler}>
               {postData ? "Edit" : "Tweet"}
             </button>
-            {postData && <button onClick={cancelEditingHandler}>Cancel</button>}
+            {postData && (
+              <button
+                onClick={cancelEditingHandler}
+                className={styles["cancel-btn"]}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </div>
         {emojiPickerVisible && (

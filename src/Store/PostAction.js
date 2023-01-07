@@ -108,7 +108,22 @@ export const editTweetHandler = (
         authorization: token,
       },
     });
+    // console.log(response);
+    dispatch(PostSliceAction.setPostData({ allPost: response.posts }));
+  };
+};
+
+export const deleteTweetHandler = (sendRequest, postId) => {
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    const response = await sendRequest({
+      url: `/api/posts/${postId}`,
+      method: "DELETE",
+      headers: {
+        authorization: token,
+      },
+    });
     console.log(response);
-    // dispatch(PostSliceAction.setPostData({ allPost: response.posts }));
+    dispatch(PostSliceAction.setPostData({ allPost: response.posts }));
   };
 };

@@ -95,10 +95,16 @@ function Profile() {
   };
 
   const followersModalHandler = async (e) => {
+    if (userData?.followers?.length === 0) {
+      return;
+    }
     setFollowersModalVisibility(true);
   };
 
   const followingModalHandler = async (e) => {
+    if (userData?.following?.length === 0) {
+      return;
+    }
     setFollowingModalVisibility(true);
   };
 
@@ -211,7 +217,9 @@ function Profile() {
                   <button onClick={editProfileDataHandler}>Edit Profile</button>
                 )}
                 {loggedInUserId !== userId && (
-                  <button onClick={followHandlerFunc}>Follow</button>
+                  <button onClick={followHandlerFunc}>
+                    {isUserAlreadyFollowed.length ? "UnFollow" : "Follow"}
+                  </button>
                 )}
                 {loggedInUserId === userId && (
                   <button

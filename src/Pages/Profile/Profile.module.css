@@ -178,7 +178,7 @@ border: solid var(--secondary-background-color);
 }
 
 .edit-profile-picture svg{
-    color:black;
+    color:var(--main-text-color);
     position:absolute;
     pointer-events: none;
 }
@@ -242,9 +242,9 @@ color:var(--main-background-color);
 }
 
 @media(min-width:950px){
-    .profile-sec{
+    /* .profile-sec{
         width:45%;
-    }
+    } */
 
  
 

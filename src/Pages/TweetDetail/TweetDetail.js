@@ -2,20 +2,19 @@ import styles from "./TweetDetail.module.css";
 import Layout from "../../Components/Layout/Layout";
 import { useEffect, useRef, useState } from "react";
 import useFetch from "../../custom-hooks/fetch-hook";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import pic from "../../assets/profile.jpg";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { useDispatch } from "react-redux";
-import { PostSliceAction } from "../../Store/PostSlice";
 import Comment from "./Comment/Comment";
 import { addToBookmark, removeFromBookmark } from "../../Store/BookmarkAction";
 import { addCommentHandler, likeTweetHandler } from "../../Store/PostAction";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NewTweetContainer from "../NewTweet/NewTweetContainer";
 import { Link } from "react-router-dom";
+import { deleteTweetHandler } from "../../Store/PostAction";
 
 function TweetDetail() {
   const { tweetId } = useParams();
@@ -24,6 +23,7 @@ function TweetDetail() {
   const userId = localStorage.getItem("userId");
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [postData, setPostData] = useState();
@@ -77,6 +77,11 @@ function TweetDetail() {
     setEditModalVisibility(!editModalVisible);
   };
 
+  const deletePostHandler = () => {
+    dispatch(deleteTweetHandler(sendRequest, postData["_id"]));
+    navigate("/home");
+  };
+
   return (
     <Layout>
       <div className={styles["tweet-details-page"]}>
@@ -119,13 +124,22 @@ function TweetDetail() {
                   <div>27-12-2022</div>
                 </div>
               </div>
-              <div className={styles["edit-post-container"]}>
+              <div className={styles["post-action-container"]}>
                 {postData.userId === userId && (
                   <MoreHorizIcon
                     onClick={() => setEditBtnVisibility(!editBtnVisible)}
                   />
                 )}
-                {editBtnVisible && <div onClick={editPostHandler}>Edit</div>}
+                {editBtnVisible && (
+                  <div className={styles["post-action-btn-container"]}>
+                    {editBtnVisible && (
+                      <button onClick={editPostHandler}>Edit</button>
+                    )}
+                    {editBtnVisible && (
+                      <button onClick={deletePostHandler}>Delete</button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <div className={styles["tweet-content"]}>

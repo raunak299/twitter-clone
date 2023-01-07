@@ -107,7 +107,7 @@
 .tweet-btn{
     border-radius: 50px;
     font-weight: bold;
-    color:whitesmoke;
+    color:var(--main-background-color);
     background: var(--main-theme-color);
     padding:.5rem 1rem;
     border: solid var(--main-theme-color);
@@ -115,10 +115,10 @@
 }
 
 
-.btn-container button:nth-child(2){
+.cancel-btn{
     border-radius: 50px;
     font-weight: bold;
-    color:whitesmoke;
+    color:var(--main-icon-color);
     background-color: var(--main-background-color);
     border: solid var(--main-theme-color);
     padding:.5rem 1rem;

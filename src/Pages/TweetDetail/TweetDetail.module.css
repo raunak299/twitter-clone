@@ -38,21 +38,34 @@
     align-items: flex-start;
 }
 
-.edit-post-container{
+.post-action-container{
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
 }
 
-.edit-post-container div{
+.post-action-btn-container{
   border: solid var(--main-theme-color);
-  padding:.3rem 1rem ;
+  /* padding:.3rem 1rem ; */
+  margin:.5rem 0;
   border-radius:5px;
   font-weight: bold;
 }
 
-.edit-post-container svg{
+
+.post-action-btn-container button{
+    width:100%;
+    background: var(--main-background-color);
+    color:var(--main-text-color);
+    padding:.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border:none;
+    border:solid var(--main-border-color);
+}
+
+.post-action-btn-container svg{
     margin-bottom:.2rem;
 }
 
