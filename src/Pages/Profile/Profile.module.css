@@ -50,6 +50,19 @@ color:var(--main-text-color);
 border: solid var(--secondary-background-color);
 }
 
+.profile-action-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+}
+
+
+.profile-action-container button{
+   margin-top:1rem;
+}
+
 .logout-button{
     border-radius: 50px;
 font-weight: bold;
@@ -242,9 +255,9 @@ color:var(--main-background-color);
 }
 
 @media(min-width:950px){
-    /* .profile-sec{
-        width:45%;
-    } */
+    .profile-sec{
+        width:50%;
+    }
 
  
 

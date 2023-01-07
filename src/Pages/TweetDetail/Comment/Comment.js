@@ -55,7 +55,12 @@ function Comment(props) {
               textDecoration: "initial",
             }}
           >
-            <h3>{commentData.username}</h3>
+            <h3>
+              {commentData.username.substr(
+                0,
+                commentData.username.indexOf("@")
+              )}
+            </h3>
           </Link>
           <div className={styles["comment-content"]}>{commentData.content}</div>
           <div className={styles["comment-action-sec"]}>

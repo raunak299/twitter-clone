@@ -137,8 +137,8 @@ export const posts = [
   },
   {
     _id: "cfce77a0-8717-4268-a101-69d20a08e935",
-    pic: "https://res.cloudinary.com/ducugiwdi/image/upload/v1672566146/Qkart_xwruqt.png",
-    content: "My first react app: http://qkart-demo.netlify.app/ ",
+    pic: "https://res.cloudinary.com/ducugiwdi/image/upload/v1673097059/twitter_meme_1_k6cubv.jpg",
+    content: "Only person who can save twitter now",
     likes: {
       likeCount: 2,
       likedBy: [
@@ -247,5 +247,24 @@ export const posts = [
     createdAt: "2023-01-01T15:06:54+05:30",
     updatedAt: "2023-01-01T15:10:08+05:30",
     id: "2",
+  },
+
+  {
+    _id: "c945c610-6f5c-4b7d-8017-758254fa2f5a",
+    pic: "https://res.cloudinary.com/ducugiwdi/image/upload/v1673097091/tweeter_meme2_vmytcm.jpg",
+    content: "",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [],
+    userPic:
+      "https://res.cloudinary.com/ducugiwdi/image/upload/v1672564959/profile5_olcnqw.jpg",
+    userId: "d04df361-b79d-4e71-a6a1-b70a9f9987cb",
+    username: "akarshitak@gmail.com",
+    createdAt: "2023-01-07T18:44:49+05:30",
+    updatedAt: "2023-01-07T18:44:49+05:30",
+    id: "3",
   },
 ];

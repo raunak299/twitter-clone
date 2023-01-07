@@ -5,6 +5,8 @@ import { useRef } from "react";
 import useAuthHook from "../../custom-hooks/auth-hook";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Authentication() {
   const emailRef = useRef();
@@ -27,7 +29,7 @@ function Authentication() {
     setInputTouched: setEmailTouched,
   } = useAuthHook();
   const emailHandler = () => {
-    setEmailTouched();
+    setEmailTouched(true);
     verifyEmail();
   };
   const verifyEmail = () => {
@@ -46,7 +48,7 @@ function Authentication() {
     setInputTouched: setPasswordTouched,
   } = useAuthHook();
   const passwordHandler = () => {
-    setPasswordTouched();
+    setPasswordTouched(true);
     verifyPassword();
   };
   const verifyPassword = () => {
@@ -64,7 +66,7 @@ function Authentication() {
     setInputTouched: setConfirmPasswordTouched,
   } = useAuthHook();
   const confirmPasswordHandler = () => {
-    setConfirmPasswordTouched();
+    setConfirmPasswordTouched(true);
     verifyConfirmPassword();
   };
   const verifyConfirmPassword = () => {
@@ -88,6 +90,8 @@ function Authentication() {
     }
   };
 
+  console.log(passwordTouched);
+
   const formValid = login
     ? emailError.length === 0 &&
       emailTouched &&
@@ -101,16 +105,20 @@ function Authentication() {
       confirmPasswordTouched;
 
   const applydata = (data) => {
+    if (!data?.encodedToken) {
+      resetAuthForm();
+      return;
+    }
     console.log(data);
     const userType = login ? "foundUser" : "createdUser";
-    localStorage.setItem("token", data.encodedToken);
-    localStorage.setItem("email", data[userType].username);
-    localStorage.setItem("userId", data[userType]["_id"]);
-    localStorage.setItem("profilePic", data[userType].pic);
+    localStorage.setItem("token", data?.encodedToken);
+    localStorage.setItem("email", data[userType]?.username);
+    localStorage.setItem("userId", data[userType]?.["_id"]);
+    localStorage.setItem("profilePic", data[userType]?.pic);
     navigate(location.state?.from?.pathname ?? "/");
   };
 
-  const { sendRequest } = useFetch();
+  const { sendRequest, error } = useFetch();
   const url = login ? "/api/auth/login" : "/api/auth/signup";
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -132,6 +140,8 @@ function Authentication() {
   return (
     <div className={styles["auth-page"]}>
       <TwitterIcon />
+      {error && <ToastContainer />}
+
       <form className={styles["auth-sec"]} onSubmit={submitHandler}>
         <h1>{!login ? "Create your account" : "Login to your account"}</h1>
 

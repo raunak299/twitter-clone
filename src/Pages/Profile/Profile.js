@@ -70,10 +70,6 @@ function Profile() {
     dispatch(followHandler(sendRequest, url, userId));
   };
 
-  // const removeTweetImg = () => {
-  //   setTweetImg("");
-  // };
-
   const [editModalVisibility, setEditModalVisibility] = useState(false);
   const [followersModalVisibility, setFollowersModalVisibility] =
     useState(false);
@@ -178,7 +174,10 @@ function Profile() {
                 {userData?.followers.map((user) => (
                   <Link to={`/profile/${user["_id"]}`}>
                     <img src={user?.pic}></img>
-                    <div>{user.username}</div>
+                    <div>
+                      {" "}
+                      {user.username.substr(0, user.username.indexOf("@"))}
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -200,7 +199,10 @@ function Profile() {
                 {userData?.following.map((user) => (
                   <Link to={`/profile/${user["_id"]}`}>
                     <img src={user?.pic}></img>
-                    <div>{user.username}</div>
+                    <div>
+                      {" "}
+                      {user.username.substr(0, user.username.indexOf("@"))}
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -208,30 +210,40 @@ function Profile() {
           </OverlayModal>
         )}
         {loading && <h1>Loading!!</h1>}
-        {!loading && postList.length > 0 && userData && (
+        {!loading && (
           <div className={styles["profile-sec"]}>
             <div className={styles["profile-modal"]}>
               <div>
                 <img src={userData?.pic} />
-                {loggedInUserId === userId && (
-                  <button onClick={editProfileDataHandler}>Edit Profile</button>
-                )}
-                {loggedInUserId !== userId && (
-                  <button onClick={followHandlerFunc}>
-                    {isUserAlreadyFollowed.length ? "UnFollow" : "Follow"}
-                  </button>
-                )}
-                {loggedInUserId === userId && (
-                  <button
-                    onClick={logoutHandler}
-                    className={styles["logout-button"]}
-                  >
-                    Logout
-                  </button>
-                )}
+                <div className={styles["profile-action-container"]}>
+                  {loggedInUserId === userId && (
+                    <button onClick={editProfileDataHandler}>
+                      Edit Profile
+                    </button>
+                  )}
+                  {loggedInUserId !== userId && (
+                    <button onClick={followHandlerFunc}>
+                      {isUserAlreadyFollowed?.length ? "UnFollow" : "Follow"}
+                    </button>
+                  )}
+                  {loggedInUserId === userId && (
+                    <button
+                      onClick={logoutHandler}
+                      className={styles["logout-button"]}
+                    >
+                      Logout
+                    </button>
+                  )}
+                </div>
               </div>
               <div className={styles["profile-data"]}>
-                <div>{userData.username}</div>
+                <div>
+                  {" "}
+                  {userData?.username?.substr(
+                    0,
+                    userData?.username?.indexOf("@")
+                  )}
+                </div>
                 <div>{userData.bio}</div>
                 <div className={styles["followers-sec"]}>
                   <span

@@ -107,7 +107,7 @@
 .tweet-btn{
     border-radius: 50px;
     font-weight: bold;
-    color:var(--main-background-color);
+    color:var(--main-text-color);
     background: var(--main-theme-color);
     padding:.5rem 1rem;
     border: solid var(--main-theme-color);

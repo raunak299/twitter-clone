@@ -5,7 +5,7 @@ const useAuthHook = () => {
   const [error, setError] = useState("");
 
   const setInputTouched = (value) => {
-    setTouched(true);
+    setTouched(value);
   };
 
   const checkValidity = (validityCheck, value, errMsg) => {

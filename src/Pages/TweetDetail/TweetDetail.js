@@ -119,9 +119,14 @@ function TweetDetail() {
                       textDecoration: "initial",
                     }}
                   >
-                    <div>Raunak Raj</div>
+                    <div>
+                      {postData.username.substr(
+                        0,
+                        postData.username.indexOf("@")
+                      )}
+                    </div>
                   </Link>
-                  <div>27-12-2022</div>
+                  <div>{postData.createdAt.substr(0, 10)}</div>
                 </div>
               </div>
               <div className={styles["post-action-container"]}>
