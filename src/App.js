@@ -9,9 +9,15 @@ import Profile from "./Pages/Profile/Profile";
 import TweetDetail from "./Pages/TweetDetail/TweetDetail";
 import Bookmark from "./Pages/Bookmark/Bookmark";
 import SearchUser from "./Pages/SeachUser/SearchUser";
+import { useEffect } from "react";
 
 function App() {
-  const login = localStorage.getItem("token");
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme) {
+      document.body.className = theme;
+    }
+  }, []);
 
   return (
     <Routes>

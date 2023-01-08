@@ -5,7 +5,7 @@ import { useRef } from "react";
 import useAuthHook from "../../custom-hooks/auth-hook";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Authentication() {
@@ -20,7 +20,7 @@ function Authentication() {
     if (localStorage.getItem("token")) {
       navigate("/profile");
     }
-  }, []);
+  }, [navigate]);
 
   const {
     inputTouched: emailTouched,
@@ -90,7 +90,7 @@ function Authentication() {
     }
   };
 
-  console.log(passwordTouched);
+  // console.log(passwordTouched);
 
   const formValid = login
     ? emailError.length === 0 &&
@@ -114,7 +114,6 @@ function Authentication() {
     localStorage.setItem("token", data?.encodedToken);
     localStorage.setItem("email", data[userType]?.username);
     localStorage.setItem("userId", data[userType]?.["_id"]);
-    localStorage.setItem("profilePic", data[userType]?.pic);
     navigate(location.state?.from?.pathname ?? "/");
   };
 
@@ -128,6 +127,22 @@ function Authentication() {
       body: JSON.stringify({
         username: emailRef.current.value.toLowerCase(),
         password: passwordRef.current.value,
+        firstname: "",
+        lastname: "",
+      }),
+      headers: { "content-type": "application/json" },
+    });
+    applydata(response);
+    resetAuthForm();
+  };
+
+  const testUserLoginHandler = async () => {
+    const response = await sendRequest({
+      url,
+      method: "POST",
+      body: JSON.stringify({
+        username: "raunakraj299@gmail.com",
+        password: "123456789",
         firstname: "",
         lastname: "",
       }),
@@ -207,6 +222,12 @@ function Authentication() {
         >
           {!login ? "Sign Up" : "Log In"}
         </button>
+
+        {login && (
+          <button onClick={testUserLoginHandler} className={styles["enabled"]}>
+            Test User
+          </button>
+        )}
 
         <div className={styles["login-toggle"]}>
           {login ? "Not a memeber yet ? " : "Already a member ? "}

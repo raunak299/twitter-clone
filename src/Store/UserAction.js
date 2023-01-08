@@ -34,6 +34,7 @@ export const editProfileHandler = (sendRequest, user, profilePic, bio) => {
         authorization: token,
       },
     });
-    dispatch(UserSliceAction.setUserData({ usersList: response }));
+    console.log(response);
+    dispatch(UserSliceAction.setUserData({ usersList: response.user }));
   };
 };

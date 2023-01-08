@@ -10,7 +10,7 @@ export const posts = [
   {
     _id: "2e8c8fc8-383f-4f51-8f64-850bcced6e20",
     pic: "",
-    content: "First Post🥳",
+    content: "7$ for Blue tick 🤯",
     likes: {
       likeCount: 3,
       likedBy: [

@@ -1,35 +1,24 @@
 import { useEffect, useRef } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../Components/Layout/Layout";
 import useFetch from "../../custom-hooks/fetch-hook";
-import TweetDetail from "../TweetDetail/TweetDetail";
 import styles from "./Profile.module.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TweetCard from "../../Components/TweetCard/TweetCard";
-import { Token } from "@mui/icons-material";
-import { UserSliceAction } from "../../Store/UserSlice";
 import { editProfileHandler, followHandler } from "../../Store/UserAction";
 import OverlayModal from "../../Components/OverlayModal/OverlayModal";
 import { Link } from "react-router-dom";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { CircularProgress } from "@mui/material";
 // import { set } from "immer/dist/internal";
 
 function Profile() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const logoutHandler = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("email");
-    localStorage.removeItem("profilePic");
-    navigate("/authentication");
-  };
-
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState(false);
-  const [postListUser, setPostListUser] = useState([]);
+  const [userData, setUserData] = useState();
+  const [postListUser, setPostListUser] = useState();
   const { userId } = useParams();
   const loggedInUserId = localStorage.getItem("userId");
   const { sendRequest } = useFetch();
@@ -105,7 +94,7 @@ function Profile() {
   };
 
   const bioref = useRef();
-  const [profilePic, setProfilePic] = useState("");
+  const [profilePic, setProfilePic] = useState(userData?.pic);
   const addProfilePic = async (e) => {
     const file = e.target.files[0];
     const toBase64 = (file) =>
@@ -134,6 +123,13 @@ function Profile() {
     setEditModalVisibility(false);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("email");
+    navigate("/authentication");
+  };
+
   return (
     <div
       className={`${editModalVisibility ? styles["modal-open"] : ""}`}
@@ -144,7 +140,7 @@ function Profile() {
           <OverlayModal>
             <div className={styles["edit-profile-overlay"]}>
               <div className={styles["edit-profile-picture"]}>
-                <img src={profilePic ? profilePic : userData.pic}></img>
+                <img src={profilePic ? profilePic : userData.pic} alt=""></img>
                 <input
                   type="file"
                   id="edit-profile-picture"
@@ -171,9 +167,9 @@ function Profile() {
                     setFollowingModalVisibility(false);
                 }}
               >
-                {userData?.followers.map((user) => (
-                  <Link to={`/profile/${user["_id"]}`}>
-                    <img src={user?.pic}></img>
+                {userData?.followers.map((user, index) => (
+                  <Link to={`/profile/${user["_id"]}`} key={index}>
+                    <img src={user?.pic} alt=""></img>
                     <div>
                       {" "}
                       {user.username.substr(0, user.username.indexOf("@"))}
@@ -196,9 +192,9 @@ function Profile() {
                     setFollowingModalVisibility(false);
                 }}
               >
-                {userData?.following.map((user) => (
-                  <Link to={`/profile/${user["_id"]}`}>
-                    <img src={user?.pic}></img>
+                {userData?.following.map((user, index) => (
+                  <Link to={`/profile/${user["_id"]}`} key={index}>
+                    <img src={user?.pic} alt=""></img>
                     <div>
                       {" "}
                       {user.username.substr(0, user.username.indexOf("@"))}
@@ -209,12 +205,16 @@ function Profile() {
             </div>
           </OverlayModal>
         )}
-        {loading && <h1>Loading!!</h1>}
-        {!loading && (
+        {(loading || !userData || !postListUser) && (
+          <div className={styles["loading"]}>
+            <CircularProgress />
+          </div>
+        )}
+        {!loading && userData && postListUser && (
           <div className={styles["profile-sec"]}>
             <div className={styles["profile-modal"]}>
               <div>
-                <img src={userData?.pic} />
+                <img src={userData?.pic} alt="" />
                 <div className={styles["profile-action-container"]}>
                   {loggedInUserId === userId && (
                     <button onClick={editProfileDataHandler}>

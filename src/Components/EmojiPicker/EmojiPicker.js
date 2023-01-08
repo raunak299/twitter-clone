@@ -1,5 +1,4 @@
 import styles from "./EmojiPicker.module.css";
-import { useRef } from "react";
 
 function EmojiPicker(props) {
   const emojiLib = [

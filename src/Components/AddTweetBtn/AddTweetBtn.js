@@ -1,6 +1,6 @@
 import styles from "./AddTweetBtn.module.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddTweetBtn = () => {
   const navigate = useNavigate();

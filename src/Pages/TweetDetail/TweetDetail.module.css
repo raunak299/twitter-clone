@@ -7,6 +7,16 @@
 
 }
 
+.loading{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    padding-top:30vh;
+   
+}
+
 .tweet-component{
     display:flex;
     flex-direction: column;
@@ -74,7 +84,7 @@
 .user-pic{
     width:3.5rem;
     height:3.5rem;
-    background-color: white;
+    background-color: var(--main-border-color);
     border-radius: 50%;
 }
 

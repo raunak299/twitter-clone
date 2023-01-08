@@ -5,7 +5,7 @@ import { PostSliceAction } from "../../../Store/PostSlice";
 import useFetch from "../../../custom-hooks/fetch-hook";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { initializeConnect } from "react-redux/es/components/connect";
+import { useEffect, useState } from "react";
 
 function Comment(props) {
   const { commentData } = props;
@@ -17,11 +17,19 @@ function Comment(props) {
   const likedByList = commentData?.votes?.upvotedBy;
   let likedByLogInUser = likedByList.find((item) => item["_id"] === userId);
 
-  const likeCommentHandler = async () => {
-    let url = likedByLogInUser
-      ? `/api/comments/downVote/${tweetId}/${commentData["_id"]}`
-      : `/api/comments/upvote/${tweetId}/${commentData["_id"]}`;
+  const [userData, setUserData] = useState({});
 
+  useEffect(() => {
+    const getUserData = async () => {
+      const response = await sendRequest({
+        url: `/api/users/${commentData?.userData["_id"]}`,
+      });
+      setUserData(response.user);
+    };
+    getUserData();
+  }, [sendRequest, commentData.userData]);
+
+  const likeCommentHandler = async () => {
     const responseData = await sendRequest({
       url: `/api/comments/upvote/${tweetId}/${commentData["_id"]}`,
       method: "POST",
@@ -45,7 +53,7 @@ function Comment(props) {
           to={`/profile/${commentData?.userData["_id"]}`}
           style={{ color: "initial", textDecoration: "initial" }}
         >
-          <img src={commentData.userData?.pic}></img>
+          <img src={userData?.pic} alt=""></img>
         </Link>
         <div className={styles["comment-details"]}>
           <Link

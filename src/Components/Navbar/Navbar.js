@@ -8,20 +8,30 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 // import AddIcon from "@mui/icons-material/Add";
 import AddTweetBtn from "../AddTweetBtn/AddTweetBtn";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import themeContext from "../../Store/themeContext";
+import { useState } from "react";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { useEffect } from "react";
 
 const Navbar = () => {
   const userId = localStorage.getItem("userId");
 
-  const { theme, themeHandler } = useContext(themeContext);
+  // const { theme, themeHandler } = useContext(themeContext);
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const changeThemeHandler = () => {
-    themeHandler();
+    console.log("change");
+    if (localStorage.getItem("theme") === "light-theme") {
+      localStorage.setItem("theme", "dark-theme");
+      setTheme("dark-theme");
+    } else {
+      localStorage.setItem("theme", "light-theme");
+      setTheme("light-theme");
+    }
   };
 
   useEffect(() => {
-    document.body.className = theme;
+    if (localStorage.getItem("theme")) {
+      document.body.className = localStorage.getItem("theme");
+    }
   }, [theme]);
 
   return (
@@ -33,7 +43,15 @@ const Navbar = () => {
         >
           <PermIdentityIcon />
         </Link>
-        <NightlightRoundIcon onClick={changeThemeHandler} />
+        {/* <NightlightRoundIcon onClick={changeThemeHandler} /> */}
+        <div>
+          {theme === "light-theme" && (
+            <NightlightRoundIcon onClick={changeThemeHandler} />
+          )}
+          {theme === "dark-theme" && (
+            <WbSunnyIcon onClick={changeThemeHandler} />
+          )}
+        </div>
       </div>
 
       <div className={styles["navbar-large"]}>
@@ -78,7 +96,8 @@ const Navbar = () => {
         </div>
 
         <div className={styles["icon-container"]} onClick={changeThemeHandler}>
-          <NightlightRoundIcon />
+          {theme === "light-theme" && <NightlightRoundIcon />}
+          {theme === "dark-theme" && <WbSunnyIcon />}
         </div>
         <AddTweetBtn />
       </div>

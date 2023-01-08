@@ -15,6 +15,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NewTweetContainer from "../NewTweet/NewTweetContainer";
 import { Link } from "react-router-dom";
 import { deleteTweetHandler } from "../../Store/PostAction";
+import { CircularProgress } from "@mui/material";
 
 function TweetDetail() {
   const { tweetId } = useParams();
@@ -32,6 +33,7 @@ function TweetDetail() {
   const bookmarkData = useSelector(
     (state) => state.BookmarkSliceReducer.bookmarkData
   );
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -45,6 +47,11 @@ function TweetDetail() {
   useEffect(() => {
     (async () => {
       const response = await sendRequest({ url: `/api/posts/${tweetId}` });
+      const responseUser = await sendRequest({
+        url: `/api/users/${response?.post.userId}`,
+      });
+      console.log(responseUser);
+      setUserData(responseUser.user);
       setPostData(response?.post);
     })();
   }, [tweetId, sendRequest, postDataList]);
@@ -60,6 +67,7 @@ function TweetDetail() {
 
   const addComment = async () => {
     dispatch(addCommentHandler(sendRequest, postData, inputRef.current.value));
+    inputRef.current.value = "";
   };
 
   const isPostBookmarked = bookmarkData.find(
@@ -94,6 +102,11 @@ function TweetDetail() {
             />
           </div>
         )}
+        {(loading || !postData) && (
+          <div className={styles["loading"]}>
+            <CircularProgress />
+          </div>
+        )}
         {!loading && !editModalVisible && postData && (
           <div className={styles["tweet-component"]}>
             <div className={styles["tweet-user-details"]}>
@@ -106,9 +119,9 @@ function TweetDetail() {
                   }}
                 >
                   <img
-                    src={postData.userPic}
+                    src={userData.pic}
                     className={styles["user-pic"]}
-                    alt="profile-pic"
+                    alt=""
                   ></img>
                 </Link>
                 <div className={styles["user-name-date"]}>

@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { makeServer } from "./server";
 import { Provider } from "react-redux";
 import store from "./Store/index-store";
-import ThemeContextProvider from "./Store/ThemeContextProvider";
 
 // Call make Server
 makeServer();
@@ -16,9 +15,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <ThemeContextProvider>
-          <App />
-        </ThemeContextProvider>
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

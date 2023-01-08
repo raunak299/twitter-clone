@@ -4,6 +4,11 @@
     padding-bottom: 4.5rem;
 }
 
+.loading{
+    display:flex;
+    justify-content: center;
+    padding:2rem;
+}
 .new-tweet-container{
     border: solid var(--main-border-color);
     padding:1.2rem;

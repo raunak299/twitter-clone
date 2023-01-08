@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useEffect, useState } from "react";
 import { BookmarkSliceAction } from "../../Store/BookmarkSlice";
+import { CircularProgress } from "@mui/material";
 
 function Bookmark() {
   const { sendRequest } = useFetch();
@@ -29,7 +30,7 @@ function Bookmark() {
       );
     })();
     setTimeout(() => setLoading(false), 1000);
-  }, [dispatch, sendRequest]);
+  }, [dispatch, sendRequest, token]);
 
   const bookmarkData = useSelector(
     (state) => state.BookmarkSliceReducer.bookmarkData
@@ -38,7 +39,7 @@ function Bookmark() {
   return (
     <Layout>
       <div className={styles["bookmark-page"]}>
-        {loading && <h1>Loading !!</h1>}
+        {loading && <CircularProgress />}
         {!loading && bookmarkData.length === 0 && (
           <h1>No Tweet Bookmarked yet !!</h1>
         )}

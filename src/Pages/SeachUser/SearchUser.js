@@ -4,10 +4,8 @@ import { Search } from "@mui/icons-material";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserSliceAction } from "../../Store/UserSlice";
 import { getUsersData } from "../../Store/UserAction";
 import { Link } from "react-router-dom";
-import { initializeConnect } from "react-redux/es/components/connect";
 
 function SearchUser() {
   const { sendRequest } = useFetch();
@@ -16,11 +14,11 @@ function SearchUser() {
 
   useEffect(() => {
     dispatch(getUsersData(sendRequest));
-  }, [sendRequest]);
+  }, [sendRequest, dispatch]);
 
   const userData = useSelector((state) => state.UserSliceReducer.users);
   const [foundUsers, setFoundUsers] = useState([]);
-  const [searchActive, setSearchActive] = useState(false);
+
   const searchUserHandler = () => {
     const length = inputRef.current.value.length;
     if (length === 0) {
@@ -62,7 +60,7 @@ function SearchUser() {
               key={index}
             >
               <div key={index}>
-                <img src={user.pic}></img>
+                <img src={user.pic} alt=""></img>
                 <div>{user.username}</div>
               </div>
             </Link>

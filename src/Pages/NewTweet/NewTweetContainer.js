@@ -3,13 +3,11 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "../../Components/EmojiPicker/EmojiPicker";
 import CloseIcon from "@mui/icons-material/Close";
-import profilepic from "../../assets/profile.jpg";
 import { useDispatch } from "react-redux";
 import styles from "./NewTweetContainer.module.css";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { addTweetHandler } from "../../Store/PostAction";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { editTweetHandler } from "../../Store/PostAction";
 
 function NewTweetContainer(props) {
@@ -20,13 +18,28 @@ function NewTweetContainer(props) {
   const textareaRef = useRef();
   const [tweetImg, setTweetImg] = useState("");
   const [chosenEmoji, setChosenEmoji] = useState(null);
-  const profilePic = localStorage.getItem("profilePic");
+  const { sendRequest } = useFetch();
+  console.log(chosenEmoji);
+
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     if (postData) {
       setTweetImg(postData.pic);
     }
   }, [postData]);
+
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    const getUserData = async () => {
+      const response = await sendRequest({
+        url: `/api/users/${userId}`,
+      });
+
+      setUserData(response.user);
+    };
+    getUserData();
+  }, [sendRequest, userId]);
 
   const selectEmojiHandler = (emoji) => {
     setChosenEmoji(emoji);
@@ -60,7 +73,6 @@ function NewTweetContainer(props) {
     setEditBtnVisibility(false);
   };
 
-  const { sendRequest } = useFetch();
   const newTweetHandler = async () => {
     // console.log(textareaRef.current.value);
     if (!postData) {
@@ -84,11 +96,7 @@ function NewTweetContainer(props) {
 
   return (
     <div className={styles["new-tweet-container"]}>
-      <img
-        src={profilePic}
-        alt="profile-pic"
-        className={styles["profile-pic"]}
-      />
+      <img src={userData?.pic} alt="" className={styles["profile-pic"]} />
 
       <div className={styles["tweet-container"]}>
         <textarea

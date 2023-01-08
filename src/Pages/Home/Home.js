@@ -6,13 +6,12 @@ import NewTweetContainer from "../NewTweet/NewTweetContainer";
 import styles from "./Home.module.css";
 import useFetch from "../../custom-hooks/fetch-hook";
 import { useEffect, useState } from "react";
-import { BookmarkSliceAction } from "../../Store/BookmarkSlice";
+import { CircularProgress } from "@mui/material";
 
 const Home = () => {
   // const postData = useDispatch((state) => state.PostSliceReducer.postData);
   const { sendRequest } = useFetch();
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -34,9 +33,13 @@ const Home = () => {
         <div className={styles["new-tweet-container"]}>
           <NewTweetContainer />
         </div>
-        {loading && <h1>Loading !!</h1>}
+        {loading && (
+          <div className={styles["loading"]}>
+            <CircularProgress />
+          </div>
+        )}
         {!loading &&
-          postData.map((data, index) => (
+          postData?.map((data, index) => (
             <TweetCard postData={data} key={index} />
           ))}
       </div>

@@ -12,6 +12,7 @@
     height:3rem;
     border-radius: 50%;
     margin:0 1rem 0 0;
+    background:var(--main-border-color);
 }
 
 

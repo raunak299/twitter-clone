@@ -1,5 +1,4 @@
 import { BookmarkSliceAction } from "./BookmarkSlice";
-import { PostSliceAction } from "./PostSlice";
 
 const token = localStorage.getItem("token");
 

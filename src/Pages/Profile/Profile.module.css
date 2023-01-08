@@ -9,12 +9,15 @@
     position:relative;
 }
 
+
 .modal-open{
    height:100vh;
    overflow:hidden;
 
   /* pointer-events: none; */
 }
+
+
 
 .profile-modal{
     width:100%;
@@ -227,6 +230,10 @@ color:var(--main-background-color);
   padding:.5rem;
 }
 
+
+.loading{
+    padding-top:30vh;
+}
 
 @media(min-width:700px){
     .profile-sec{
