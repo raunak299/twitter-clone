@@ -109,7 +109,7 @@ function Authentication() {
       resetAuthForm();
       return;
     }
-    console.log(data);
+    // console.log(data);
     const userType = login ? "foundUser" : "createdUser";
     localStorage.setItem("token", data?.encodedToken);
     localStorage.setItem("email", data[userType]?.username);
@@ -224,9 +224,9 @@ function Authentication() {
         </button>
 
         {login && (
-          <button onClick={testUserLoginHandler} className={styles["enabled"]}>
+          <div onClick={testUserLoginHandler} className={styles["test-user"]}>
             Test User
-          </button>
+          </div>
         )}
 
         <div className={styles["login-toggle"]}>

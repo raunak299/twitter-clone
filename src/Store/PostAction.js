@@ -27,7 +27,7 @@ export const addTweetHandler = (tweetImg, tweetContent, sendRequest) => {
         authorization: token,
       },
     });
-    console.log(response.posts);
+    // console.log(response.posts);
     dispatch(PostSliceAction.setPostData({ allPost: response.posts }));
   };
 };

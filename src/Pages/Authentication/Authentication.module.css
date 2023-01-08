@@ -57,6 +57,19 @@
     width:100%;
 }
 
+.test-user{
+    width:100%;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;;
+    background:var(--third-background-color);
+    border: solid var(--main-border-color);
+    color:var(--main-background-color);
+    padding:.5rem;
+    text-align: center;
+    margin-top:1rem;
+}
+
 .auth-sec button{
 
     width:100%;
@@ -114,6 +127,12 @@
         margin-top: 1.5rem;
     }
     .auth-sec button{
+        font-size: 1.5rem;
+        padding:.7rem;
+        margin-top:1.5rem;
+    }
+
+    .test-user{
         font-size: 1.5rem;
         padding:.7rem;
         margin-top:1.5rem;
