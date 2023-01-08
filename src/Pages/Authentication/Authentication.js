@@ -1,6 +1,6 @@
 import styles from "./Authentication.module.css";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRef } from "react";
 import useAuthHook from "../../custom-hooks/auth-hook";
 import useFetch from "../../custom-hooks/fetch-hook";
@@ -16,11 +16,11 @@ function Authentication() {
   const [login, setLogin] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/profile");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     navigate("/profile");
+  //   }
+  // }, [navigate]);
 
   const {
     inputTouched: emailTouched,
