@@ -22,7 +22,16 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/home" element={<Home />} />
+
+      <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+
       <Route
         path="/tweet/:tweetId"
         element={
