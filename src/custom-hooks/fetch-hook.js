@@ -15,7 +15,7 @@ const useFetch = () => {
           : { "content-type": "application/json" },
       });
       if (!response.ok) {
-        // console.log(response);
+        console.log(response);
         let { errors } = JSON.parse(response["_bodyInit"]);
         throw new Error(errors[0]);
       }
