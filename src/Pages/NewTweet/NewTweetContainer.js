@@ -17,9 +17,9 @@ function NewTweetContainer(props) {
   const { postData, setEditModalVisibility, setEditBtnVisibility } = props;
   const textareaRef = useRef();
   const [tweetImg, setTweetImg] = useState("");
-  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [choosenEmoji, setChosenEmoji] = useState(null);
   const { sendRequest } = useFetch();
-  // console.log(chosenEmoji);
+  console.log(choosenEmoji);
 
   const userId = localStorage.getItem("userId");
 
